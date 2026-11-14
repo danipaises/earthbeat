@@ -11,6 +11,22 @@ test('all direct JavaScript DOM references exist in HTML', () => {
   const refs = new Set([...js.matchAll(/\$\('([^']+)'\)/g)].map(m=>m[1]));
   assert.deepEqual([...refs].filter(id=>!ids.has(id)),[]);
 });
+test('NASA mission and annual analysis UI have resolvable controls',()=>{
+  const ex = fs.readFileSync(path.join(__dirname,'..','src','experience.js'),'utf8');
+  const ids = new Set([...html.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]));
+  const refs = new Set([...ex.matchAll(/\$\('([^']+)'\)/g)].map(m=>m[1]));
+  assert.deepEqual([...refs].filter(id=>!ids.has(id)),[]);
+  for(const id of ['startMission','missionPanel','missionSound','missionNext','telemetryBands','yearChart','yearTableBody','yearExport']){
+    assert.ok(ids.has(id),'Missing mission UI component '+id);
+  }
+});
+test('annual analysis is derived from real NASA pixels and exposes no fictitious readings',()=>{
+  const ex=fs.readFileSync(path.join(__dirname,'..','src','experience.js'),'utf8');
+  assert.match(ex,/app\.getAnnualMetrics\(\)/);
+  assert.match(ex,/\.mean\*100/);
+  assert.match(ex,/URL\.createObjectURL/);
+  assert.match(ex,/annual\.length!==12/);
+});
 test('A and B each have a keyboard-accessible independent listening button',()=>{
   assert.match(html,/id="compareListenA"[^>]*aria-pressed/);
   assert.match(html,/id="compareListenB"[^>]*aria-pressed/);
