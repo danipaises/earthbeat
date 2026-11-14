@@ -48,8 +48,9 @@ Visit `http://localhost:8765`. This is not a React app; no npm install is needed
 ## Tests
 
 ```bash
-node --test tests/core.test.js tests/sonification.test.js
+node --test tests/core.test.js tests/sonification.test.js tests/playback.test.js
 node --check src/observatory.js
+node --check src/playback.js
 ```
 
 Synthetic RGBA fixtures are used exclusively in tests, never published as NASA science.
@@ -57,6 +58,8 @@ Synthetic RGBA fixtures are used exclusively in tests, never published as NASA s
 ## Credits and disclosures
 
 - [Scientific methodology and limits](docs/SCIENCE.md)
+- [OSI-approved MIT project license](LICENSE)
+- [Third-party licenses and attributions](docs/THIRD_PARTY_NOTICES.md)
 - [Original NASA source registry](docs/SOURCES.md)
 - [AI use disclosure](docs/AI_DISCLOSURE.md)
 - [Submission checklist](docs/SUBMISSION.md)
