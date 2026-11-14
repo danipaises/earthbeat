@@ -1,7 +1,5 @@
-# AI Usage Disclosure — EarthBeat
+# AI use disclosure
 
-This EarthBeat proof of concept was created with assistance from **OpenAI ChatGPT (GPT-6)** for generating, organizing and revising frontend code, a deterministic pixel-to-audio mapper, tests, scientific attribution notes, and GitHub Pages deployment files.
+OpenAI ChatGPT (GPT-6) was used as an implementation assistant for frontend design, Web Audio JavaScript, source scripts, tests, documentation, and GitHub deployment. Data sources are original NASA Scientific Visualization Studio visualizations. There is no AI-generated substitute for missing scientific data. The browser produces live sound using deterministic code, not an AI music generator.
 
-AI assistance **does not replace** tests against NASA source imagery, human review, or validation of audio interpretation. The generated music is based on computer processing of NASA imagery, **not on generative music models**. The published scientific source is NASA SVS, not AI-generated satellite data.
-
-The repository was populated and a GitHub Actions deployment workflow was configured through ChatGPT's connected GitHub tools. Report any additional AI tools or modifications made by the team before the final NASA Space Apps submission.
+Human team members must inspect and validate the results, confirm scientific accuracy, test accessibility and browser playback, and declare any additional AI tools used during NASA Space Apps submission.

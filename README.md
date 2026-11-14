@@ -1,66 +1,64 @@
-# EarthBeat — Hear the Earth. Understand its changes.
+# EarthBeat Observatory — NASA Space Apps Challenge 2026
 
-**NASA Space Apps Challenge 2026** · The Earth Information Jukebox
+**Hear the Earth. Understand its changes.**
 
-[Open the site on GitHub Pages](https://danipaises.github.io/earthbeat/) · [NASA source: SVS 5276](https://svs.gsfc.nasa.gov/5276/) · [NASA EIC version: SVS 5313](https://svs.gsfc.nasa.gov/5313/)
+Live site: https://danipaises.github.io/earthbeat/  
+Challenge: [The Earth Information Jukebox](https://www.spaceappschallenge.org/2026/challenges/the-earth-information-jukebox/)
 
-EarthBeat is an independent interactive sonification experience. It maps **real pixels** of annual NASA Black Marble nighttime-lights visualizations from **2012–2023** to notes synthesized in your browser. It does **not** claim that Earth generates those sounds or that pixel intensity is calibrated physical radiance.
+EarthBeat Observatory turns frames from **six NASA Scientific Visualization Studio visualizations** into music generated in real time in your browser. It is a free static site with no accounts, paid APIs, container or backend. It uses actual visual data from NASA and explicitly distinguishes a visual sonification index from calibrated physical measurements.
 
-## What works
+## Six experiences
 
-- Timeline selecting years 2012–2023
-- Audio controls: Play, Pause, Stop, volume, tempo, WAV export
-- Dynamic note synthesis driven by image brightness and spatial distribution
-- Scanline animation and waveform
-- Compare two years and show their relative visual metrics
-- Choose full, left, right or center of the map
-- Portuguese and English interface
-- Keyboard-friendly controls and mobile layout
-- Explicit NASA source credits and scientific limitations
+- Night Lights: 12 annual NASA Black Marble frames, 2012–2023; visual A/B comparison.
+- Living Oceans: eight source-video frames from ECCO2 ocean currents and temperature visualization.
+- Atmospheric Aerosols: GEOS colored model snapshot, August 2025.
+- Carbon Pulse: eight visual sample frames from the DYAMOND modeled CO₂ visualization of January–March 2020.
+- Forest Voices: eight visual sample frames from the GEDI forest-height visualization.
+- Lightning Beats: one illustrative NASA frame of LIS detections on the ISS, 2017–2023.
 
-## Deploy on GitHub Pages
+**Important:** video sample frames may contain **camera motion**; they must not be used to claim quantitative trends. No physical concentrations, radiation values or precise strike counts are computed from screen colors. See [Scientific Method](docs/SCIENCE.md).
 
-This repository uses a GitHub Actions workflow: [`.github/workflows/pages.yml`](.github/workflows/pages.yml).
+## Features
 
-1. In this repository, open **Settings → Pages**.
-2. Under **Build and deployment**, set **Source = GitHub Actions**.
-3. Open **Actions → Deploy EarthBeat (NASA data) to GitHub Pages** and select **Run workflow**, or push an update to `main`.
-4. Wait for the workflow to finish successfully and open **https://danipaises.github.io/earthbeat/**.
+Immersive mission control, selective 3D globe (only flat/equirectangular imagery), 2D image viewer, six data-to-audio instruments, mix two independent data sources, 84-step sonification, audio style / speed / volume / region, NASA original frame navigation, responsive layout, 2012-vs-2023 side-by-side comparison, offline WAV export, source registry, transparent science explanations, keyboard controls and a classic version at [classic.html](classic.html).
 
-The workflow downloads the official **12-frame H.265 MP4** from [NASA Scientific Visualization Studio, item 5276](https://svs.gsfc.nasa.gov/5276/), checks there are 12 frames, and uses FFmpeg to convert each year into `assets/nightlights/YYYY.webp` **inside the deployment artifact**. The images may not appear as files in the GitHub repository because they are generated only for the published site.
+## GitHub Pages deployment
 
-If downloading NASA assets fails, the workflow **fails rather than silently publishing synthetic measurements**. The page also offers manual import of the original NASA video or annual images.
+This repository has a [GitHub Actions workflow](.github/workflows/pages.yml) that downloads original NASA video/image resources, extracts 12 + 8 + 8 + 8 + 1 + 1 = **38 WebP frames**, executes tests and deploys the static website. 
 
-**Important:** Merely adding a workflow does not prove the Pages site is live. Check the workflow's green success status and open the public URL before submitting.
+1. Repo **Settings → Pages → Source = GitHub Actions**.
+2. Push to `main` or manually run **EarthBeat Observatory — NASA data and GitHub Pages** from the Actions tab.
+3. Check the workflow is green. Then open https://danipaises.github.io/earthbeat/ .
 
-## Run locally on Ubuntu
+All 38 images must exist. The pipeline fails if required NASA originals are not accessible. The site reports absent images rather than inventing substitutes.
+
+## Local usage (Ubuntu)
 
 ```bash
 git clone https://github.com/danipaises/earthbeat.git
 cd earthbeat
-sudo apt update && sudo apt install -y curl ffmpeg python3
+sudo apt-get update && sudo apt-get install -y ffmpeg curl python3
 bash scripts/prepare_nasa.sh
+bash scripts/prepare_observatory.sh
 python3 -m http.server 8765
 ```
 
-Visit http://localhost:8765 . To run the website without downloading files, it may try a third-party image proxy or you can import the official NASA MP4 manually; that proxy is not guaranteed to work. The GitHub Pages workflow avoids that dependency by packaging all twelve local WebP images.
+Visit `http://localhost:8765`. This is not a React app; no npm install is needed.
 
 ## Tests
 
 ```bash
-node --test tests/core.test.js
+node --test tests/core.test.js tests/sonification.test.js
+node --check src/observatory.js
 ```
 
-The seven tests check basic sonification invariants against **synthetic test fixtures** and do not pretend to validate NASA's scientific measurements.
+Synthetic RGBA fixtures are used exclusively in tests, never published as NASA science.
 
-## Data provenance and limitations
+## Credits and disclosures
 
-- [NASA SVS — Change in Night Lights between 2012 and 2023](https://svs.gsfc.nasa.gov/5276/)
-- [NASA SVS — Earth Information Center variant](https://svs.gsfc.nasa.gov/5313/)
-- [Space Apps challenge description](https://www.spaceappschallenge.org/2026/challenges/the-earth-information-jukebox/)
+- [Scientific methodology and limits](docs/SCIENCE.md)
+- [Original NASA source registry](docs/SOURCES.md)
+- [AI use disclosure](docs/AI_DISCLOSURE.md)
+- [Submission checklist](docs/SUBMISSION.md)
 
-Scientific methodology: [docs/SCIENCE.md](docs/SCIENCE.md). Data and credits: [docs/SOURCES.md](docs/SOURCES.md). AI disclosure: [docs/AI_DISCLOSURE.md](docs/AI_DISCLOSURE.md).
-
-The visual indices are **not calibrated NASA radiance values**. They are features extracted from rendered NASA imagery, using a fixed conversion for all years. Please do not infer a causal environmental or economic change from sound differences alone.
-
-Built independently for NASA Space Apps Challenge 2026; **not a NASA-endorsed application**.
+Visualizations and original science: **NASA Scientific Visualization Studio** and the specific credited scientific teams listed on each SVS resource page. EarthBeat is an independent NASA Space Apps 2026 team project, **not an official NASA product or endorsement**.

@@ -1,63 +1,53 @@
-name: Deploy EarthBeat (NASA data) to GitHub Pages
-
+name: EarthBeat Observatory — NASA data and GitHub Pages
 on:
   push:
     branches: [main]
   workflow_dispatch:
-
 permissions:
   contents: read
   pages: write
   id-token: write
-
 concurrency:
-  group: earthbeat-pages
+  group: pages
   cancel-in-progress: false
-
 jobs:
   deploy:
-    name: Build real NASA images and deploy
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    timeout-minutes: 24
     steps:
-      - name: Checkout source
+      - name: Check out repository
         uses: actions/checkout@v4
-
-      - name: Install imaging dependencies
+      - name: Install media decoding tools
         run: |
-          command -v curl >/dev/null || sudo apt-get install -y curl
-          command -v ffmpeg >/dev/null || (sudo apt-get update && sudo apt-get install -y ffmpeg)
-
-      - name: Verify deterministic sonification tests
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg curl
+      - name: Check science mapping and deterministic tests
         run: |
-          node --check src/core.js
-          node --test tests/core.test.js
-
-      - name: Download NASA SVS annual Black Marble frames
+          node --check src/observatory.js
+          node --check src/sonification.js
+          node --test tests/core.test.js tests/sonification.test.js
+      - name: Generate 12 official NASA night lights images
         run: bash scripts/prepare_nasa.sh
-
-      - name: Verify all twelve real annual images
-        shell: bash
+      - name: Generate six original NASA visualizations
+        run: bash scripts/prepare_observatory.sh
+      - name: Verify all scientific media before deployment
         run: |
           set -euo pipefail
-          for year in {2012..2023}; do
-            test -s "assets/nightlights/${year}.webp" || { echo "NASA image missing for ${year}"; exit 1; }
-          done
-          echo "All 12 NASA annual images are available."
-
-      - name: Set up GitHub Pages
+          for year in {2012..2023}; do test -s "assets/nightlights/$year.webp"; done
+          for id in ocean carbon forest; do for n in {1..8}; do test -s "$(printf 'assets/observatory/%s/%02d.webp' "$id" "$n")"; done; done
+          for id in aerosols lightning; do test -s "assets/observatory/$id/01.webp"; done
+          echo "All 38 frames are from original NASA media."
+      - name: Configure Pages
         uses: actions/configure-pages@v5
-
-      - name: Upload static site
+      - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
         with:
           path: .
-
-      - name: Wait for GitHub artifact indexing
-        run: sleep 18
-
-      - name: Deploy GitHub Pages
+      - name: Allow artifact indexing
+        run: sleep 20
+      - name: Deploy Pages
         id: deployment
         uses: actions/deploy-pages@v4

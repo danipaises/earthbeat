@@ -1,20 +1,19 @@
-# Data and credits
+# Official NASA source registry
 
-## NASA data and visualizations
+Resources for the NASA Space Apps Challenge 2026 **The Earth Information Jukebox** challenge.
 
-- **NASA Scientific Visualization Studio, item 5276:** https://svs.gsfc.nasa.gov/5276/
-- **Earth Information Center variant, item 5313:** https://svs.gsfc.nasa.gov/5313/
-- **Earth Information Center gallery:** https://svs.gsfc.nasa.gov/gallery/earth-information-center/
-- **12-frame only-lights official NASA MP4:** https://svs.gsfc.nasa.gov/vis/a000000/a005200/a005276/nightlights_flat_series_stills_only_lights_2160p3_h265.mp4
+- [NASA SVS 5276 — Change in Night Lights between 2012 and 2023](https://svs.gsfc.nasa.gov/5276/) — 12 annual VIIRS/Black Marble images.
+- [NASA SVS 3912 — Global Sea Surface Currents and Temperature](https://svs.gsfc.nasa.gov/3912/) — ECCO2 visualization.
+- [NASA SVS 5669 — GEOS Aerosols (2025)](https://svs.gsfc.nasa.gov/5669/) — 19 August 2025 model still.
+- [NASA SVS 5196 — DYAMOND Global Carbon Dioxide](https://svs.gsfc.nasa.gov/5196/) — visualized model from January–March 2020.
+- [NASA SVS 4950 — GEDI Forest Height](https://svs.gsfc.nasa.gov/4950/) — 2019–2020 observation-based visualizations.
+- [NASA SVS 5011 — Lightning Events Detected from ISS (2017–2023)](https://svs.gsfc.nasa.gov/5011/) — ISS LIS visualization still.
+- [NASA Earth Information Center gallery](https://svs.gsfc.nasa.gov/gallery/earth-information-center/)
 
-This 12-frame clip is turned into 12 annual WebP files by `scripts/prepare_nasa.sh` during the GitHub Pages build. No generated/fake pixel data is included in the published scientific visualization.
+### Exact source media URLs
 
-## Attribution
+See [prepare_nasa.sh](../scripts/prepare_nasa.sh) and [prepare_observatory.sh](../scripts/prepare_observatory.sh) for exact URLs, sampling intervals and FFmpeg commands. Files in `assets/observatory/` are created during the GitHub Pages deployment and are **not generated scientific values**.
 
-Credit: **NASA's Scientific Visualization Studio**. Visualization by **Kel Elkins (USRA)**.
+### Copyright and attribution
 
-NASA SVS item 5276 attributes Black Marble imagery to Suomi NPP / VIIRS (NASA/NOAA); associated scientists and original data sources are listed on the NASA SVS page.
-
-## Independence
-
-EarthBeat is an independent project developed for **NASA Space Apps Challenge 2026**. NASA is a source of scientific imagery and does not endorse or operate this application. Sonification methods and UI are the team's implementation.
+NASA SVS materials are generally public-domain unless otherwise noted. These assets are silent scientific visualization frames and not a third-party music recording. Attribution to NASA's Scientific Visualization Studio is displayed and each dataset links to its original source. See [NASA SVS usage help](https://svs.gsfc.nasa.gov/help/).

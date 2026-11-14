@@ -1,490 +1,53 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#06101c" />
-  <meta name="description" content="EarthBeat transforma visualizações reais da NASA em som — explore as luzes noturnas da Terra de 2012 a 2023." />
-  
-  <style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
-:root{color-scheme:dark;--bg:#050d17;--panel:#0a1827;--surface:#0d1d2f;--stroke:#21364a;--muted:#8294a8;--text:#eaf6ff;--cyan:#4be9de;--cyan2:#63b6ec;--violet:#8184fe;--font:'DM Sans',system-ui,-apple-system,sans-serif;--display:'Space Grotesk',system-ui,sans-serif}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px;line-height:1.5;overflow-x:hidden}a{color:inherit;text-decoration:none}button,input,select{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.45}button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:2px solid var(--cyan);outline-offset:4px}::selection{background:#39c9c4;color:#04131d}canvas{display:block;width:100%}.ambient{position:fixed;z-index:-1;pointer-events:none;filter:blur(35px);opacity:.35}.ambient-one{background:radial-gradient(circle,#185479 0,transparent 68%);width:750px;height:850px;right:-300px;top:-220px}.ambient-two{background:radial-gradient(circle,#28437e 0,transparent 68%);width:730px;height:700px;left:-480px;top:340px;opacity:.25}.site-shell{width:min(1296px,calc(100% - 80px));margin:auto}.topbar{height:95px;display:flex;justify-content:space-between;align-items:center;gap:25px;border-bottom:1px solid #1b3042}.brand{display:flex;align-items:center;gap:11px;font-family:var(--display);font-size:27px;font-weight:400;letter-spacing:-1.5px;line-height:1}.brand-strong{font-weight:700;color:#56e9e4}.brand small{display:block;font:700 8px var(--font);letter-spacing:2.7px;margin-top:7px;color:#6f889e}.brand-icon{display:flex;color:var(--cyan);width:44px;height:44px}.brand-icon svg{width:44px}.nav-links{display:flex;gap:40px;color:#a4b5c4;font-weight:600;font-size:12px}.nav-links a:hover{color:var(--cyan)}.top-actions{display:flex;align-items:center;gap:24px}.top-live{font-size:10px;letter-spacing:1.4px;font-weight:700;color:#a6c0d2;display:flex;align-items:center;gap:10px}.top-live i,.status-dot{width:7px;height:7px;display:inline-block;border-radius:50%;background:#39e5a3;box-shadow:0 0 13px #39e5a3}.language-button{border:1px solid #2b4556;border-radius:9px;color:#def4ff;background:#0c1b2a;padding:10px 13px;font-size:11px;font-weight:700;letter-spacing:.7px}.language-button span{color:var(--cyan);margin-left:5px}.hero{min-height:514px;padding:70px 0 65px;display:flex;align-items:center;justify-content:space-between;gap:35px}.hero-copy{width:65%;position:relative;z-index:2}.eyebrow,.section-index,.micro-label{font-size:10px;letter-spacing:2px;font-weight:700;color:#56d9d1}.eyebrow{display:flex;align-items:center;gap:13px;margin-bottom:22px}.eyebrow-line{height:1px;width:29px;background:var(--cyan)}.mini-spark{font-size:15px}.hero h1{font-family:var(--display);font-size:clamp(37px,4.55vw,65px);letter-spacing:-2.8px;font-weight:600;line-height:1.1;margin:0;max-width:810px}.hero em,.science-heading em{font-style:normal;color:var(--cyan)}.hero p{font-size:15px;color:#94abbf;max-width:580px;margin:23px 0 30px;line-height:1.8}.hero-buttons{display:flex;align-items:center;flex-wrap:wrap;gap:30px}.primary-button{background:linear-gradient(105deg,#3fefda,#60d9c4);color:#063039;font-weight:800;border-radius:9px;display:inline-flex;align-items:center;gap:35px;padding:15px 22px;box-shadow:0 14px 43px #2be9c41f}.primary-button:hover{filter:brightness(1.08)}.secondary-link{display:flex;align-items:center;gap:9px;font-weight:700;font-size:12px;color:#d7e8f6}.play-circle{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;border:1px solid #4b7088;color:#53e7d8;font-size:19px}.hero-meta{display:flex;gap:27px;align-items:center;margin-top:58px}.hero-meta>div:not(.vline){display:flex;flex-direction:column;gap:4px}.hero-meta strong{font:700 20px var(--display);color:#e4fbff}.hero-meta span{font-size:11px;color:#7d93a4}.vline{height:30px;border-left:1px solid #2b4354}.hero-art{width:35%;height:360px;display:grid;place-items:center;position:relative;min-width:340px}.earth-orb{position:absolute;width:266px;height:266px;border-radius:50%;background:radial-gradient(circle at 37% 30%,#397fa0 0%,#20496f 24%,#112641 56%,#071224 81%);box-shadow:inset -33px -16px 50px #02080ec7,inset 20px 0 30px #4acbcc28,0 0 92px #1a9fb043;overflow:hidden;border:1px solid #35718490}.earth-orb:after{content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(ellipse at 35% 42%,transparent 20%,#000d2159 62%,#0013228c 100%),linear-gradient(150deg,transparent 18%,#72c7df3e 30%,transparent 34%,transparent 54%,#7dece63d 57%,transparent 60%);mix-blend-mode:screen}.orb-grid{position:absolute;inset:0;border-radius:50%;background:repeating-linear-gradient(0deg,transparent 0 22px,#52a8c91d 23px,#52a8c91d 24px),repeating-linear-gradient(90deg,transparent 0 24px,#6ec7ef22 25px,#6ec7ef22 26px);transform:rotate(-17deg)}.earth-pulse{position:absolute;top:48%;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#90ffeb,#60fcff,transparent);box-shadow:0 0 27px 7px #44f4e03d;transform:rotate(-21deg)}.orb-orbit{position:absolute;width:340px;height:340px;border:1px dashed #40779654;border-radius:50%;transform:rotate(-20deg) scaleY(.76)}.orb-orbit-two{width:410px;height:410px;opacity:.4;transform:rotate(20deg) scaleY(.76)}.art-point{position:absolute;border:1px solid #2b6072;background:#081926d9;color:#6fbfc9;border-radius:5px;font:700 9px var(--display);letter-spacing:1.3px;padding:8px 10px}.p1{left:-8px;top:55px}.p2{right:4px;top:105px}.p3{right:20px;bottom:25px}.explorer{scroll-margin-top:30px}.section-heading{display:flex;align-items:end;justify-content:space-between;gap:25px;margin-bottom:28px}.section-heading h2{font:600 clamp(28px,3vw,42px)/1.12 var(--display);letter-spacing:-1.6px;margin:10px 0 7px}.section-heading p{margin:0;color:#879fb0;font-size:13px}.source-status{display:flex;align-items:center;gap:9px;background:#0d2633;border:1px solid #255466;color:#97dddf;border-radius:24px;padding:9px 12px;font-size:10px;font-weight:700;white-space:nowrap}.status-dot.loading{background:#e4ad53;box-shadow:0 0 10px #e4ad53}.status-dot.error{background:#fe7f77;box-shadow:0 0 10px #f8767d}.studio-layout{display:grid;grid-template-columns:minmax(0,1.72fr) minmax(300px,.87fr);gap:19px}.visual-column{display:flex;flex-direction:column;gap:18px;min-width:0}.map-card,.timeline-card,.controls-card,.metric-card,.science-card{border:1px solid var(--stroke);border-radius:14px;background:linear-gradient(143deg,#102236b5,#081725f5);box-shadow:0 10px 30px #00000018}.map-card{padding:18px}.map-topline{display:flex;align-items:center;justify-content:space-between;gap:10px;color:#a7bed0;font-size:9px;letter-spacing:1.55px;font-weight:700;padding:0 4px 17px}.map-topline>div{display:flex;align-items:center;gap:11px}.red-led{width:7px;height:7px;background:#fb7d79;box-shadow:0 0 10px #e46c71;border-radius:50%}.map-coordinate{color:#657d92}.map-stage{aspect-ratio:16/9;background:radial-gradient(ellipse at 48% 48%,#102c45,#020914 77%);border:1px solid #28475f;border-radius:9px;overflow:hidden;position:relative}.map-stage canvas{width:100%;height:100%;object-fit:fill}.map-vignette{pointer-events:none;position:absolute;inset:0;box-shadow:inset 0 0 90px 30px #06102177}.map-loading{position:absolute;inset:0;background:#071422e8;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;gap:7px;padding:20px;z-index:3}.map-loading[hidden]{display:none}.map-loading strong{font:600 14px var(--display)}.map-loading span{color:#8ea9bf;font-size:11px;max-width:310px}.loading-orbit{height:49px;width:49px;border-radius:50%;border:2px solid #19445a;border-top:2px solid var(--cyan);animation:spin 1s linear infinite;margin-bottom:13px}.import-button,.small-file-button{background:#153447;color:#7deee5;border:1px solid #367e8b;border-radius:6px;padding:8px 11px;font-size:11px;font-weight:700;margin-top:8px}.map-hud{position:absolute;inset:17px 18px auto;display:flex;justify-content:space-between;align-items:start;pointer-events:none}.hud-year{font:700 27px var(--display);letter-spacing:-1px;color:#e3f8ff;text-shadow:0 2px 12px #000}.hud-right{font:700 9px var(--display);letter-spacing:1px;color:#9cb7ce;background:#061725a8;padding:8px;border:1px solid #264a60;border-radius:4px}.hud-right i{display:inline-block;width:4px;height:4px;border-radius:50%;background:var(--cyan);margin:0 4px}.map-watermark{position:absolute;bottom:13px;right:15px;font:700 9px var(--display);letter-spacing:1.3px;color:#82a7bb96}.waveform-area{margin-top:14px;background:#061421;border:1px solid #1e374a;border-radius:8px;padding:12px 14px 8px}.wave-head,.wave-scale,.timeline-head,.panel-heading,.slider-row,.compare-top,.progress-times{display:flex;align-items:center;justify-content:space-between;gap:12px}.wave-head{font:700 9px var(--display);letter-spacing:1.3px;color:#7d9bb3}.wave-head b{color:var(--cyan);font-size:8px}.wave-head span:last-child{color:#51e4dd}.waveform-area canvas{height:68px}.wave-scale{font-size:9px;color:#55768a}.timeline-card{padding:20px 20px 17px}.timeline-head h3{font:600 27px var(--display);letter-spacing:-1px;margin:4px 0 14px}.tiny-light{color:var(--cyan);font-size:10px}.year-range{font:500 11px var(--display);letter-spacing:.4px;color:#8fa7b9}.year-range span{color:var(--cyan);margin:0 8px}.year-buttons{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:4px}.year-buttons button{height:37px;min-width:0;border-radius:6px;background:#0a1c2b;border:1px solid #254155;color:#93acbc;font-size:10px;font-weight:700;padding:0}.year-buttons button.active{background:#2de6cc;color:#042a31;border-color:#2de6cc;box-shadow:0 0 20px #2de6cc28}.year-buttons button:hover:not(.active){border-color:#60b8c6;color:#e9ffff}.timeline-note{display:flex;align-items:center;gap:9px;border-top:1px solid #24394b;margin-top:19px;padding-top:14px;font-size:11px;color:#8299ae}.hint-icon{font-size:16px;color:#61dfd9}.controls-card{padding:22px;height:100%}.panel-heading h3{font:600 22px var(--display);letter-spacing:-.65px;margin:6px 0 0}.panel-symbol{color:#48e2d9;border:1px solid #2d6473;border-radius:50%;width:37px;height:37px;display:grid;place-items:center;font-size:23px}.player-center{text-align:center;padding:26px 0 17px}.disc{width:132px;height:132px;margin:auto;border-radius:50%;display:grid;place-items:center;background:repeating-radial-gradient(circle at center,#142e42 0 2px,#0d2136 3px 6px),conic-gradient(from 20deg,#325b6c,#081522,#4be9de,#0b1b2a,#8184fe,#325b6c);border:1px solid #3f7886;box-shadow:0 0 55px #2bcee02b,inset 0 0 19px #8cfeff33;position:relative}.disc:before{content:"";position:absolute;inset:9px;border-radius:50%;border:1px solid #5cd1dd38}.disc.is-playing{animation:spin 7s linear infinite}.disc-inner{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;background:#081829;border:1px solid #56cbcf;color:#4beaeb;box-shadow:0 0 28px #2dc6c33d}.disc-inner svg{width:34px}.track-name{font:600 17px var(--display);margin:18px 0 4px}.track-subtitle{font-size:10px;color:#789caf;letter-spacing:1.1px}.transport{display:flex;align-items:center;justify-content:center;gap:27px;margin:4px 0 19px}.transport-small{background:none;border:none;color:#b5d0e2;font-size:21px;width:32px;height:32px}.play-main{width:59px;height:59px;border-radius:50%;border:0;background:#4af0db;box-shadow:0 0 35px #3bdece50;color:#08252e;font-size:22px;display:grid;place-items:center;padding-left:4px}.progress-track{height:5px;border-radius:9px;background:#203748;overflow:hidden}.progress-fill{height:100%;width:0;background:linear-gradient(90deg,#499fff,#50eecb);border-radius:9px;transition:width .12s linear}.progress-times{font-size:10px;color:#7897a8;margin:7px 0 0}.control-divider{height:1px;background:#294053;margin:18px 0}.slider-row{font-size:12px;font-weight:600;color:#d1e4f3;margin-bottom:7px}.slider-row>span:first-child{display:flex;align-items:center;gap:9px}.slider-row svg{width:18px;height:18px;color:#81adbf}.slider-row>span:last-child{font:700 11px var(--display);color:#67dcd9}input[type=range]{width:100%;accent-color:#4be9de;cursor:pointer;margin:0 0 17px;height:5px}.select-block{display:flex;flex-direction:column;gap:7px;margin-top:3px}.select-block .micro-label{color:#8daabb;font-size:9px}select{width:100%;border:1px solid #2e4c62;border-radius:7px;padding:10px 11px;background:#102438;color:#d8e7f0;outline:none;font-size:11px}.compare-top strong{display:block;font-size:12px}.compare-top span{display:block;font-size:10px;color:#869fb0;margin-top:4px}.toggle{display:inline-flex;align-items:center;cursor:pointer}.toggle input{position:absolute;opacity:0;width:1px;height:1px}.toggle>span{display:block;width:39px;height:22px;border-radius:20px;background:#244052;position:relative;transition:background .2s}.toggle>span:before{content:"";width:15px;height:15px;background:#b1c7d3;position:absolute;top:3.5px;left:4px;border-radius:50%;transition:transform .2s}.toggle input:checked+span{background:#32beb4}.toggle input:checked+span:before{transform:translateX(16px);background:#fff}.toggle input:focus-visible+span{outline:2px solid #4be9de;outline-offset:3px}.compare-details{margin-top:17px}.compare-details[hidden]{display:none}.compare-details label{display:block;font-size:10px;color:#98b7c6;margin-bottom:7px}.compare-buttons{display:flex;gap:8px;margin-top:11px}.outline-button{background:#113245;border:1px solid #36687c;border-radius:7px;padding:8px 13px;color:#8aeee8;font-weight:700;font-size:11px;flex:1}.outline-button:hover{background:#1b4559}.delta-readout{font-size:10px;color:#9caebd;margin-top:10px}.export-btn{width:100%;margin-top:23px;padding:13px;background:#0d2839;border:1px solid #327480;border-radius:8px;color:#83f0e6;font-size:12px;font-weight:700;display:flex;justify-content:center;align-items:center;gap:10px}.export-btn:hover:not(:disabled){background:#164456}.export-btn span:first-child{font-size:19px}.shortcut-note{text-align:center;color:#6d899a;font-size:10px;margin:13px 0 0}.data-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px;margin-top:18px}.metric-card{padding:19px 22px}.metric-label{display:flex;align-items:center;gap:10px;font-weight:700;font-size:11px;color:#aac0cf}.metric-icon{color:#4fe7df;font-size:20px}.metric-card strong{display:block;font:700 31px var(--display);letter-spacing:-1px;margin:14px 0 1px}.metric-card>span{font-size:10px;color:#718d9f}.metric-bar{height:3px;border-radius:8px;background:#1d3d4c;margin-top:16px;overflow:hidden}.metric-bar>div{background:linear-gradient(90deg,#427bf5,#49edce);height:100%;width:0;transition:width .35s}.error-banner{display:flex;gap:12px;flex-wrap:wrap;align-items:center;background:#2c1d26;border:1px solid #9e586c;color:#ffdce3;border-radius:9px;padding:16px;margin-top:16px;font-size:11px}.error-banner[hidden]{display:none}.error-banner strong{font-size:12px}.error-banner span{flex:1;min-width:250px}.error-banner a{text-decoration:underline}.science-section{padding:96px 0 70px;scroll-margin-top:50px}.science-heading em{color:#63e7db}.science-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.science-card{padding:27px 26px;min-height:245px;position:relative;overflow:hidden}.science-card:after{content:"";position:absolute;right:-40px;top:-60px;height:160px;width:160px;background:radial-gradient(circle,#1c6e7863,transparent 66%)}.science-number{font:700 11px var(--display);color:#5d98a5}.science-icon{font-size:46px;color:#59e3da;font-family:var(--display);margin:15px 0 2px}.science-card h3{font:600 18px var(--display);margin:8px 0}.science-card p{font-size:12px;line-height:1.75;color:#8da8ba;margin:0;max-width:290px}.science-disclaimer{display:flex;gap:14px;border:1px solid #2c4b5b;background:#112634;border-radius:9px;margin-top:19px;padding:15px 19px;color:#a3b9c8}.science-disclaimer span{color:#63e4dc;font-size:22px;line-height:1}.science-disclaimer p{font-size:12px;line-height:1.6;margin:0}.sources-section{border-top:1px solid #1f3849;padding:54px 0 60px;display:flex;align-items:center;justify-content:space-between;gap:50px;scroll-margin-top:50px}.sources-section>div:first-child{max-width:800px}.sources-section h2{font:600 29px var(--display);margin:12px 0 9px;letter-spacing:-1px}.sources-section p{font-size:12px;line-height:1.9;color:#8fa9b8}.source-links{display:flex;gap:13px;flex-wrap:wrap;margin-top:20px}.source-links a{font-size:10px;color:#87e7e5;border:1px solid #2c6a73;padding:9px 13px;border-radius:6px;font-weight:700}.source-links a:hover{background:#123547}.source-emblem{color:#57cbc5;width:155px;height:155px;opacity:.5;flex-shrink:0}.source-emblem svg{width:100%;height:100%}.footer{border-top:1px solid #1c3042;min-height:80px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;color:#728da0;font-size:10px}.footer>span:last-child{letter-spacing:1px;font:600 9px var(--display)}.footer b{color:#52d9d8}@keyframes spin{to{transform:rotate(360deg)}}@media(max-width:1100px){.site-shell{width:min(100% - 42px,1120px)}.hero-copy{width:66%}.hero-art{min-width:240px}.earth-orb{width:220px;height:220px}.orb-orbit{width:280px;height:280px}.orb-orbit-two{width:320px;height:320px}.studio-layout{grid-template-columns:minmax(0,1.5fr) minmax(280px,.8fr)}.year-buttons{grid-template-columns:repeat(6,1fr)}}@media(max-width:850px){.topbar{height:73px}.nav-links{display:none}.top-live{display:none}.hero{padding:48px 0 45px;min-height:390px}.hero-copy{width:100%}.hero-art{display:none}.hero h1{font-size:clamp(38px,6.7vw,58px)}.hero-meta{margin-top:38px}.studio-layout{grid-template-columns:1fr}.controls-card{display:grid;grid-template-columns:1fr 1fr;column-gap:25px;align-items:start}.panel-heading,.player-center,.transport,.progress-bar,.export-btn,.shortcut-note{grid-column:1}.control-divider:first-of-type,.slider-row,input[type=range],.select-block,.compare-section{grid-column:2}.panel-heading{margin-bottom:10px}.player-center{padding:10px 0}.disc{width:100px;height:100px}.transport{margin-top:0}.controls-card>.control-divider{grid-column:2}.controls-card>.control-divider:nth-of-type(2){grid-column:2}.controls-card>.export-btn{margin-top:10px}.controls-card>.shortcut-note{margin-top:8px}.controls-card .control-divider{margin:12px 0}.data-grid{grid-template-columns:repeat(3,1fr)}.metric-card{padding:15px}.science-section{padding-top:70px}}@media(max-width:590px){.site-shell{width:calc(100% - 28px)}.brand{font-size:23px}.brand-icon,.brand-icon svg{width:39px}.topbar{gap:10px}.language-button{padding:8px 10px}.hero{padding:43px 2px 39px;min-height:auto}.hero h1{font-size:38px;line-height:1.17;letter-spacing:-1.8px}.hero p{font-size:13px;line-height:1.7}.hero-buttons{gap:20px}.primary-button{padding:13px 15px;gap:18px;font-size:12px}.secondary-link{font-size:11px}.hero-meta{gap:16px;margin-top:35px}.hero-meta strong{font-size:17px}.hero-meta span{font-size:9px}.section-heading{align-items:start;flex-direction:column;gap:14px}.section-heading h2{font-size:31px}.source-status{align-self:flex-start}.map-card{padding:10px}.map-topline{padding:5px 4px 12px;font-size:8px}.map-coordinate{font-size:8px}.map-hud{inset:10px 12px auto}.hud-year{font-size:21px}.hud-right{font-size:7px;padding:6px}.timeline-card{padding:15px}.year-buttons{grid-template-columns:repeat(6,1fr);gap:6px}.year-buttons button{font-size:10px}.controls-card{display:block;padding:20px}.player-center{padding:20px 0 15px}.disc{width:125px;height:125px}.control-divider:first-of-type{margin:18px 0}.data-grid{grid-template-columns:1fr 1fr;gap:11px}.metric-card:last-child{grid-column:1/-1}.metric-card strong{font-size:26px;margin:8px 0}.metric-card>span{font-size:9px}.metric-label{font-size:10px}.science-section{padding-top:66px;padding-bottom:45px}.science-grid{grid-template-columns:1fr;gap:12px}.science-card{min-height:auto;padding:20px}.science-icon{margin:6px 0;font-size:35px}.science-card h3{margin:4px 0}.science-card p{max-width:none}.sources-section{padding:44px 0}.source-emblem{display:none}.footer{padding:18px 0;gap:5px;flex-direction:column;align-items:flex-start}.timeline-note{font-size:10px}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.001ms!important;transition-duration:.001ms!important}}
-
-</style>
-  <title>EarthBeat | Hear the Earth</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#050d19">
+<meta name="description" content="EarthBeat Observatory — seis experiências sonoras construídas a partir de visualizações científicas reais da NASA. NASA Space Apps Challenge 2026.">
+<title>EarthBeat Observatory | Hear the Earth</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="ambient ambient-one" aria-hidden="true"></div><div class="ambient ambient-two" aria-hidden="true"></div>
-  <div class="site-shell">
-    <header class="topbar">
-      <a class="brand" href="#inicio" aria-label="EarthBeat — início">
-        <span class="brand-icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="17" stroke="currentColor" stroke-width="1.6"/><path d="M7 24h10l4-9 6 19 4-10h10" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M15 9c4 3 6 8 6 15s-2 12-6 15M33 9c-4 3-6 8-6 15s2 12 6 15" stroke="currentColor" stroke-width="1.2" opacity=".45"/></svg></span>
-        <span>earth<span class="brand-strong">beat</span><small>NASA SPACE APPS '26</small></span>
-      </a>
-      <nav class="nav-links" aria-label="Navegação principal"><a href="#explorar" data-i18n="navExplore">Explorar</a><a href="#ciencia" data-i18n="navScience">A ciência</a><a href="#fontes" data-i18n="navSources">Fontes</a></nav>
-      <div class="top-actions"><span class="top-live"><i></i><span data-i18n="realData">DADOS DA NASA</span></span><button id="languageBtn" class="language-button" aria-label="Switch language to English">EN <span aria-hidden="true">↗</span></button></div>
-    </header>
-
-    <main id="inicio">
-      <section class="hero">
-        <div class="hero-copy"><div class="eyebrow"><span class="eyebrow-line"></span> SCIENCE MEETS SOUND <span class="mini-spark">✳</span></div>
-          <h1 data-i18n-html="heroTitle">O planeta <em>não é silencioso.</em><br>Você só precisa <em>ouvi-lo.</em></h1>
-          <p data-i18n="heroText">Transformamos imagens reais da NASA em uma experiência musical interativa. Explore uma década de luzes noturnas e descubra os padrões da Terra através do som.</p>
-          <div class="hero-buttons"><a class="primary-button" href="#explorar"><span data-i18n="startExploring">Começar a explorar</span> <span aria-hidden="true">↗</span></a><a class="secondary-link" href="#ciencia"><span class="play-circle">▷</span> <span data-i18n="howItWorks">Como funciona</span></a></div>
-          <div class="hero-meta"><div><strong>12</strong><span data-i18n="yearsOfData">anos de dados</span></div><div class="vline"></div><div><strong>NASA</strong><span data-i18n="sourceVerified">fonte científica</span></div><div class="vline"></div><div><strong>100%</strong><span data-i18n="liveAudio">som sintetizado</span></div></div>
-        </div>
-        <div class="hero-art" aria-hidden="true"><div class="orb-orbit orb-orbit-one"></div><div class="orb-orbit orb-orbit-two"></div><div class="earth-orb"><div class="orb-grid"></div><span class="earth-pulse"></span></div><span class="art-point p1">01 / AMPLITUDE</span><span class="art-point p2">NASA / EARTH</span><span class="art-point p3">WAVEFORM 〰〰〰</span></div>
-      </section>
-
-      <section id="explorar" class="explorer" aria-labelledby="exploreHeading">
-        <div class="section-heading"><div><span class="section-index">01 / <span data-i18n="experience">EXPERIÊNCIA</span></span><h2 id="exploreHeading" data-i18n="hearTheWorld">Ouça o mundo mudar.</h2><p data-i18n="exploreSubtitle">Escolha um ano, pressione reproduzir e deixe os dados se transformarem em música.</p></div><div class="source-status" id="sourceStatus" role="status" aria-live="polite"><span class="status-dot loading"></span><span data-i18n="loadingData">Buscando dados da NASA…</span></div></div>
-
-        <div class="studio-layout">
-          <div class="visual-column">
-            <div class="map-card">
-              <div class="map-topline"><div><span class="red-led"></span><span data-i18n="satelliteView">VISUALIZAÇÃO DE SATÉLITE</span></div><span class="map-coordinate">SUOMI NPP / VIIRS</span></div>
-              <div class="map-stage" id="mapStage"><canvas id="earthCanvas" width="1280" height="720" role="img" aria-label="Visualização de luzes noturnas da NASA com scanner de sonificação"></canvas><div class="map-vignette" aria-hidden="true"></div><div class="map-loading" id="mapLoading"><div class="loading-orbit"></div><strong id="loadingTitle">Carregando dados científicos</strong><span id="loadingHelp">Procurando as imagens de luzes noturnas da NASA.</span><button id="importButton" class="import-button" data-i18n="importImage">Importar vídeo/imagens NASA</button></div><div class="map-hud"><span class="hud-year" id="hudYear">2023</span><span class="hud-right">EARTH / NIGHT LIGHTS <i></i> <span id="hudScan">00:00</span></span></div><span class="map-watermark">EARTHBEAT · SVS / NASA</span></div>
-              <div class="waveform-area"><div class="wave-head"><span>SONIFICATION SIGNAL <b>●</b></span><span id="waveValue">-- Hz</span></div><canvas id="waveCanvas" width="960" height="92" aria-hidden="true"></canvas><div class="wave-scale" aria-hidden="true"><span>0</span><span>¼</span><span>½</span><span>¾</span><span>1</span></div></div>
-            </div>
-            <div class="timeline-card"><div class="timeline-head"><div><span class="micro-label" data-i18n="timeTravel">VIAGEM NO TEMPO</span><h3 id="selectedYearHeading">2023 <span class="tiny-light">●</span></h3></div><div class="year-range">2012 <span>→</span> 2023</div></div><div id="years" class="year-buttons" role="group" aria-label="Selecionar ano"></div><div class="timeline-note"><span class="hint-icon">✦</span><span data-i18n="timelineHint">Cada ano usa uma imagem NASA diferente. O algoritmo musical permanece o mesmo.</span></div></div>
-          </div>
-
-          <aside class="control-column" aria-label="Estúdio de sonificação">
-            <div class="controls-card"><div class="panel-heading"><div><span class="micro-label" data-i18n="soundStudio">ESTÚDIO DE SOM</span><h3 data-i18n="yourEarthYourSound">Sua Terra. Seu som.</h3></div><span class="panel-symbol" aria-hidden="true">◉</span></div>
-              <div class="player-center"><div class="disc" id="disc" aria-hidden="true"><div class="disc-inner"><svg viewBox="0 0 48 48"><path d="M2 25h9l5-12 8 23 7-18 5 7h10" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div><p class="track-name" data-i18n="nightLights">Night Lights Sonata</p><span id="nowPlaying" class="track-subtitle">2023 · GLOBAL</span></div>
-              <div class="transport"><button id="stopBtn" class="transport-small" title="Stop" aria-label="Parar" disabled>■</button><button id="playBtn" class="play-main" aria-label="Reproduzir" disabled>▶</button><button id="restartBtn" class="transport-small" title="Restart" aria-label="Reiniciar" disabled>↻</button></div>
-              <div class="progress-bar"><div id="progressTrack" class="progress-track" role="progressbar" aria-label="Progresso da música" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="progressFill" class="progress-fill"></div></div><div class="progress-times"><span id="elapsed">00:00</span><span id="duration">00:10</span></div></div>
-              <div class="control-divider"></div>
-              <label class="slider-row" for="volume"><span><svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4ZM17 9a5 5 0 0 1 0 6M19 6a9 9 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span data-i18n="volume">Volume</span></span><span id="volumeOutput">65%</span></label><input id="volume" type="range" min="0" max="100" value="65" aria-label="Volume" />
-              <label class="slider-row" for="speed"><span><svg viewBox="0 0 24 24"><path d="M4 16a8 8 0 1 1 16 0M12 16l5-6M8 19h8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span data-i18n="speed">Velocidade</span></span><span id="speedOutput">1×</span></label><input id="speed" type="range" min="50" max="200" value="100" step="25" aria-label="Velocidade de reprodução" />
-              <div class="select-block"><label for="region" class="micro-label" data-i18n="explorationZone">REGIÃO VISUAL ANALISADA</label><select id="region"><option value="all" data-i18n="wholePlanet">Mapa completo</option><option value="west" data-i18n="westernHalf">Metade esquerda</option><option value="east" data-i18n="easternHalf">Metade direita</option><option value="center" data-i18n="centralHalf">Faixa central</option></select></div>
-              <div class="control-divider"></div><div class="compare-section"><div class="compare-top"><div><strong data-i18n="compareYears">Comparar anos</strong><span data-i18n="compareDesc">Ouça 2012 × 2023 lado a lado.</span></div><label class="toggle"><input type="checkbox" id="compareToggle" aria-label="Ativar comparação"><span></span></label></div><div id="compareDetails" class="compare-details" hidden><label for="compareYear" data-i18n="compareTo">Comparar com:</label><select id="compareYear" aria-label="Segundo ano"></select><div class="compare-buttons"><button id="listenA" class="outline-button" data-i18n="listenA">Ouvir A</button><button id="listenB" class="outline-button" data-i18n="listenB">Ouvir B</button></div><div id="deltaReadout" class="delta-readout"></div></div></div>
-              <button id="exportBtn" class="export-btn" disabled><span>↓</span> <span data-i18n="exportWav">Exportar áudio WAV</span></button>
-              <p class="shortcut-note" data-i18n="keyboardHint">Atalho: espaço para reproduzir/pausar, ← → para mudar de ano.</p>
-            </div>
-          </aside>
-        </div>
-
-        <div class="data-grid"><div class="metric-card"><div class="metric-label"><span class="metric-icon">◌</span><span data-i18n="litPixels">Pixels iluminados</span></div><strong id="metricDensity">—</strong><span data-i18n="litDescription">Fração da imagem acima do limiar</span><div class="metric-bar"><div id="densityBar"></div></div></div><div class="metric-card"><div class="metric-label"><span class="metric-icon">◈</span><span data-i18n="avgIntensity">Brilho médio</span></div><strong id="metricMean">—</strong><span data-i18n="meanDescription">Índice visual relativo (0–100)</span><div class="metric-bar"><div id="meanBar"></div></div></div><div class="metric-card"><div class="metric-label"><span class="metric-icon">✦</span><span data-i18n="peakIntensity">Pico visual</span></div><strong id="metricPeak">—</strong><span data-i18n="peakDescription">Maior intensidade encontrada</span><div class="metric-bar"><div id="peakBar"></div></div></div></div>
-        <div id="errorBanner" class="error-banner" hidden role="alert"><strong data-i18n="noData">Os dados ainda não carregaram.</strong><span data-i18n="dataFallback">Você pode carregar imagens da NASA baixadas no computador. O aplicativo nunca substitui dados ausentes por dados fictícios.</span><label class="small-file-button" for="fileImport" data-i18n="chooseFiles">Escolher imagens</label><input id="fileImport" type="file" accept="image/*,video/mp4,video/*" multiple hidden /><a href="https://svs.gsfc.nasa.gov/vis/a000000/a005200/a005276/nightlights_flat_series_stills_only_lights_2160p3_h265.mp4" target="_blank" rel="noopener" download>↓ NASA MP4 (1 MB)</a><a href="https://svs.gsfc.nasa.gov/5276/" target="_blank" rel="noopener" data-i18n="nasaSources">Ver fonte NASA ↗</a></div>
-      </section>
-
-      <section id="ciencia" class="science-section"><div class="section-heading science-heading"><div><span class="section-index">02 / <span data-i18n="methodology">METODOLOGIA</span></span><h2 data-i18n-html="scienceTitle">Quando os dados <em>ganham voz.</em></h2><p data-i18n="scienceSubtitle">Não são sons gravados no espaço. É ciência transformada em linguagem musical.</p></div></div><div class="science-grid"><article class="science-card"><span class="science-number">01 /</span><div class="science-icon">▦</div><h3 data-i18n="stepPixels">Pixels reais</h3><p data-i18n="stepPixelsDesc">As imagens de luzes noturnas da NASA são analisadas em uma grade fixa, preservando o mesmo cálculo para todos os anos.</p></article><article class="science-card"><span class="science-number">02 /</span><div class="science-icon">≋</div><h3 data-i18n="stepTransform">Dados em notas</h3><p data-i18n="stepTransformDesc">Intensidade e distribuição dos pontos iluminados determinam volume e ritmo. A posição vertical define a altura das notas.</p></article><article class="science-card"><span class="science-number">03 /</span><div class="science-icon">♫</div><h3 data-i18n="stepSound">Síntese ao vivo</h3><p data-i18n="stepSoundDesc">O navegador gera cada nota em tempo real com Web Audio. Nenhuma trilha pré-gravada é usada para representar os dados.</p></article></div><div class="science-disclaimer"><span>ⓘ</span><p data-i18n="scienceNote">Nota científica: o áudio interpreta o brilho de imagens processadas, não medições físicas calibradas. A diferença entre anos não prova, isoladamente, mudanças ambientais ou socioeconômicas. As notas são uma representação artística e acessível dos padrões visuais.</p></div></section>
-
-      <section id="fontes" class="sources-section"><div><span class="section-index">03 / <span data-i18n="transparency">TRANSPARÊNCIA</span></span><h2 data-i18n="builtOnScience">Construído sobre ciência aberta.</h2><p data-i18n="sourcesText">EarthBeat é um projeto independente do NASA Space Apps Challenge 2026. Visualizações originais: NASA Scientific Visualization Studio, Kel Elkins; dados Black Marble / VIIRS. Não é um produto endossado pela NASA.</p><div class="source-links"><a target="_blank" rel="noopener" href="https://svs.gsfc.nasa.gov/5276/">NASA SVS #5276 ↗</a><a target="_blank" rel="noopener" href="https://svs.gsfc.nasa.gov/5313/">Earth Information Center ↗</a><a target="_blank" rel="noopener" href="https://www.spaceappschallenge.org/2026/challenges/the-earth-information-jukebox/">Space Apps Challenge ↗</a></div></div><div class="source-emblem" aria-hidden="true"><svg viewBox="0 0 220 220" fill="none"><circle cx="110" cy="110" r="90" stroke="currentColor" stroke-width="1"/><circle cx="110" cy="110" r="66" stroke="currentColor" stroke-width=".6" stroke-dasharray="3 7"/><circle cx="110" cy="110" r="42" stroke="currentColor" stroke-width="1"/><path d="M14 110h54l18-40 34 84 22-44h64" stroke="currentColor" stroke-width="3"/></svg></div></section>
-    </main>
-    <footer class="footer"><span>© 2026 EarthBeat · <span data-i18n="madeFor">Feito para o NASA Space Apps Challenge</span></span><span>HEAR THE EARTH. <b>UNDERSTAND ITS CHANGES.</b></span></footer>
+<div class="universe" aria-hidden="true"><div class="nebula nebula-a"></div><div class="nebula nebula-b"></div><div class="stars"></div></div>
+<a class="skip" href="#laboratorio">Pular para o laboratório</a>
+<div class="app-shell">
+<header class="masthead">
+ <a class="logo" href="#top" aria-label="EarthBeat, início"><span class="brand-mark">≋</span><span class="brand-word">EARTH<span>BEAT</span><small>OBSERVATORY / 2026</small></span></a>
+ <nav class="topnav" aria-label="Navegação"><a href="#laboratorio">Explorar</a><a href="#metodo">Como funciona</a><a href="#fontes">Fontes</a></nav>
+ <div class="masthead-right"><span class="verified-dot"><i></i> NASA SVS SOURCES</span><button id="langBtn" class="lang-btn" aria-label="Change language">EN</button><a class="github-link" href="https://github.com/danipaises/earthbeat" target="_blank" rel="noopener">GitHub ↗</a></div>
+</header>
+<main id="top">
+<section class="intro" aria-label="Introdução"><div class="intro-copy"><p class="kicker"><span class="line"></span> NASA SPACE APPS CHALLENGE 2026 <span class="spark">✶</span></p><h1>Ouça o <span>invisível.</span><br>Sinta o <i>planeta.</i></h1><p class="intro-description">Seis mundos sonoros. Dados visuais da NASA. Um instrumento científico que transforma padrões da Terra em música — ao vivo, no seu navegador.</p><div class="intro-actions"><a class="button-primary" href="#laboratorio">Entrar no observatório <b>↗</b></a><a class="button-ghost" href="#metodo"><span>◎</span> Descubra a ciência</a></div><div class="trustline"><span><b>06</b> fenômenos</span><span><b>12</b> anos de luzes noturnas</span><span><b>0</b> dados inventados</span></div></div>
+ <div class="hero-orbit" aria-hidden="true"><div class="orbit-path outer"></div><div class="orbit-path middle"></div><div class="hero-planet"><div class="hero-planet-shine"></div></div><div class="orbit-tag one">NASA / DATA</div><div class="orbit-tag two">AUDIO / LIVE</div><div class="orbit-ring"></div></div>
+</section>
+<section class="lab-section" id="laboratorio" aria-labelledby="labTitle">
+ <div class="section-head"><div><p class="section-kicker">01 / INTERACTIVE MISSION CONTROL</p><h2 id="labTitle">Seu observatório <em>sonoro.</em></h2><p>Escolha um fenômeno, explore os quadros da NASA e escute os padrões visuais se transformarem em uma composição única.</p></div><div class="session-indicator"><i></i> MODO CIENTÍFICO · <span id="sessionState">AGUARDANDO DADOS</span></div></div>
+ <div class="main-studio">
+  <aside class="catalog-panel" aria-label="Fenômenos disponíveis"><div class="panel-minihead"><span>FENÔMENOS / 06</span><span>▦</span></div><div id="phenomena" class="phenomena-list" role="group" aria-label="Selecionar visualização NASA"></div><div class="catalog-foot"><span>◉</span><p>Fonte principal: <strong>NASA Scientific Visualization Studio</strong>. Todos os sons são gerados a partir dos pixels.</p></div></aside>
+  <div class="stage-column">
+   <div class="visual-panel"><div class="stage-head"><div class="stage-name"><span class="pulse-dot"></span><span id="stageTag">NASA / BLACK MARBLE</span></div><div class="stage-utilities"><button id="viewBtn" class="tiny-button" title="Alternar entre globo e mapa">◉ GLOBO</button><button id="fullBtn" class="tiny-button" title="Expandir visualização" aria-label="Expandir visualização">⤢</button></div></div>
+     <div class="screen" id="screen"><canvas id="spaceCanvas" width="1180" height="680" role="img" aria-label="Visualização original da NASA"></canvas><canvas id="globeCanvas" width="860" height="860" aria-hidden="true"></canvas><div class="display-vignette"></div><div class="scan-beam" id="scanBeam" aria-hidden="true"></div><div class="screen-empty" id="emptyState" role="status"><div class="loader-orb"></div><h3 id="emptyTitle">Conectando aos dados científicos</h3><p id="emptyText">Carregando visualizações originais da NASA…</p></div><div class="screen-top"><span>◈ &nbsp; NASA / SCIENTIFIC VISUALIZATION STUDIO</span><span id="frameCounter">FRAME 01 / 12</span></div><div class="screen-bottom"><div><span id="screenSeries">EARTH / NIGHT LIGHTS</span><strong id="frameLabel">2023</strong></div><span class="crosshair">+ / + / +</span></div></div>
+     <div class="signal-panel"><div class="signal-header"><div><span class="panel-eyebrow">SONIFICATION / LIVE SIGNAL</span><strong id="voiceLabel">MELODIC IMAGING · 0 Hz</strong></div><span id="moduleGlyph">♩</span></div><canvas id="signalCanvas" width="1050" height="128" aria-label="Visualização da sequência de notas" role="img"></canvas><div class="signal-axis"><span>0%</span><span>25%</span><span>50%</span><span>75%</span><span>100%</span></div></div>
+   </div>
+   <div class="time-panel"><div class="time-title"><div><span class="panel-eyebrow">NAVEGAÇÃO CIENTÍFICA</span><h3 id="seriesTitle">Luzes noturnas · 2012—2023</h3></div><span id="timeType">12 anos</span></div><div id="timeButtons" class="time-buttons" role="group" aria-label="Escolher período ou quadro"></div><div class="timeline-legend"><span id="timeExplanation">Cada quadro é um ano real de observação.</span><label class="switchline"><input type="checkbox" id="autoFrames" checked><span>Autoavançar</span></label></div></div>
   </div>
-  <script>
-/* EarthBeat — deterministic image-derived sonification, no synthetic science. */
-(function (root, factory) {
-  const api = factory();
-  if (typeof module === 'object' && module.exports) module.exports = api;
-  root.EarthBeatCore = api;
-})(typeof window !== 'undefined' ? window : globalThis, function () {
-  'use strict';
-  const W = 320, H = 180;
-  const SCALE = [0, 2, 4, 7, 9, 12, 14, 16, 19, 21, 24]; // pentatonic C
-  const clamp = (n, lo = 0, hi = 1) => Math.max(lo, Math.min(hi, Number.isFinite(n) ? n : lo));
-  const years = Array.from({ length: 12 }, (_, i) => i + 2012);
-  const luminance = (r, g, b) => (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
-  function fromRGBA(pixels, w, h) {
-    if (!pixels || pixels.length !== w * h * 4) throw Error('Invalid RGBA dimensions');
-    const out = new Float32Array(w * h);
-    for (let i = 0; i < w * h; i++) {
-      let j = i * 4;
-      out[i] = pixels[j + 3] < 16 ? 0 : luminance(pixels[j], pixels[j + 1], pixels[j + 2]);
-    }
-    return { width: w, height: h, values: out };
-  }
-  function bounds(region) {
-    // fractions of the shown image, not claimed latitude/longitude coordinates
-    if (region === 'west') return [0, 0.5];
-    if (region === 'east') return [0.5, 1];
-    if (region === 'center') return [0.25, 0.75];
-    return [0, 1];
-  }
-  function features(grid, region = 'all') {
-    if (!grid || !grid.values) return null;
-    const [start, end] = bounds(region);
-    let a = Math.floor(start * grid.width), b = Math.ceil(end * grid.width);
-    let sum = 0, lit = 0, peak = 0, count = 0;
-    for (let x = a; x < b; x++) for (let y = 0; y < grid.height; y++) {
-      const v = grid.values[y * grid.width + x] || 0;
-      sum += v; peak = Math.max(peak, v); if (v > 0.075) lit++; count++;
-    }
-    return { mean: count ? sum / count : 0, density: count ? lit / count : 0, peak, count, sampleWidth: b - a };
-  }
-  function sequence(grid, region = 'all', steps = 88, bands = 7) {
-    if (!grid || !grid.values) return [];
-    const [start, end] = bounds(region);
-    const x0 = Math.floor(start * grid.width), x1 = Math.ceil(end * grid.width);
-    const out = [];
-    for (let tick = 0; tick < steps; tick++) {
-      const xa = x0 + Math.floor((tick / steps) * (x1 - x0));
-      const xb = x0 + Math.max(1, Math.ceil(((tick + 1) / steps) * (x1 - x0)));
-      const voices = [];
-      for (let band = 0; band < bands; band++) {
-        const ya = Math.floor((band / bands) * grid.height);
-        const yb = Math.ceil(((band + 1) / bands) * grid.height);
-        let sum = 0, litSum = 0, max = 0, count = 0, lit = 0;
-        for (let x = xa; x < Math.min(xb, grid.width); x++) for (let y = ya; y < yb; y++) {
-          const v = grid.values[y * grid.width + x] || 0;
-          sum += v; max = Math.max(max, v);
-          if (v > .075) { lit++; litSum += v; }
-          count++;
-        }
-        const density = count ? lit / count : 0;
-        const intensity = count ? sum / count : 0;
-        if (max > .065 && (density > .001 || max > .09)) {
-          // Note from upper/lower bands; loudness from measured image intensity.
-          const midi = 48 + SCALE[Math.min(SCALE.length - 1, Math.floor((bands - band - 1) / bands * 10))];
-          const hz = 440 * Math.pow(2, (midi - 69) / 12);
-          const amplitude = clamp(Math.sqrt(intensity * .92 + density * .24) * .46, .018, .26);
-          voices.push({ hz, amplitude, pan: clamp(((xa + xb) / 2 / grid.width) * 2 - 1, -1, 1), intensity, density, band });
-        }
-      }
-      out.push(voices);
-    }
-    return out;
-  }
-  function compare(a, b) {
-    if (!a || !b) return null;
-    return { meanDelta: b.mean - a.mean, densityDelta: b.density - a.density, peakDelta: b.peak - a.peak };
-  }
-  return { W, H, years, clamp, luminance, fromRGBA, features, sequence, compare, bounds };
-});
-
-</script>
-<script>
-/* EarthBeat — interactive NASA sonification studio. Vanilla JS; no build steps. */
-(function () {
-'use strict';
-const C = window.EarthBeatCore;
-const $ = (id) => document.getElementById(id);
-const ctx = $('earthCanvas').getContext('2d', { alpha: false });
-const wctx = $('waveCanvas').getContext('2d', { alpha: false });
-const TIFF_ROOT = 'https://svs.gsfc.nasa.gov/vis/a000000/a005200/a005276/frames/7680x4320_16x9_3p/nightlights_flat_2012-2023_only_lights/';
-const VIDEO_URL = 'https://svs.gsfc.nasa.gov/vis/a000000/a005200/a005276/nightlights_flat_series_stills_only_lights_2160p3_h265.mp4';
-const STEP_COUNT = 88;
-const cache = new Map();
-const state = { year: 2023, listeningYear: 2023, compareYear: 2012, region: 'all', current: null, other: null, playing: false, step: 0, volume: .65, speed: 1, timer: null, context: null, compressor: null, master: null, sourceSequence: [], language: 'pt', compare: false, loadToken: 0, error: false, lastTick: 0 };
-const texts = {
-  pt: {
-    navExplore:'Explorar',navScience:'A ciência',navSources:'Fontes',realData:'DADOS DA NASA',
-    heroTitle:'O planeta <em>não é silencioso.</em><br>Você só precisa <em>ouvi-lo.</em>',heroText:'Transformamos imagens reais da NASA em uma experiência musical interativa. Explore uma década de luzes noturnas e descubra os padrões da Terra através do som.',startExploring:'Começar a explorar',howItWorks:'Como funciona',yearsOfData:'anos de dados',sourceVerified:'fonte científica',liveAudio:'som sintetizado',experience:'EXPERIÊNCIA',hearTheWorld:'Ouça o mundo mudar.',exploreSubtitle:'Escolha um ano, pressione reproduzir e deixe os dados se transformarem em música.',loadingData:'Buscando dados da NASA…',ready:'IMAGEM NASA CARREGADA',failed:'DADOS NÃO DISPONÍVEIS',local:'ARQUIVO NASA LOCAL',satelliteView:'VISUALIZAÇÃO DE SATÉLITE',importImage:'Importar vídeo/imagens NASA',timeTravel:'VIAGEM NO TEMPO',timelineHint:'Cada ano usa uma imagem NASA diferente. O algoritmo musical permanece o mesmo.',soundStudio:'ESTÚDIO DE SOM',yourEarthYourSound:'Sua Terra. Seu som.',nightLights:'Night Lights Sonata',volume:'Volume',speed:'Velocidade',explorationZone:'REGIÃO VISUAL ANALISADA',wholePlanet:'Mapa completo',westernHalf:'Metade esquerda',easternHalf:'Metade direita',centralHalf:'Faixa central',compareYears:'Comparar anos',compareDesc:'Ouça dois períodos lado a lado.',compareTo:'Comparar com:',listenA:'Ouvir A',listenB:'Ouvir B',exportWav:'Exportar áudio WAV',keyboardHint:'Atalho: espaço para reproduzir/pausar, ← → para mudar de ano.',litPixels:'Pixels iluminados',litDescription:'Fração da imagem acima do limiar',avgIntensity:'Brilho médio',meanDescription:'Índice visual relativo (0–100)',peakIntensity:'Pico visual',peakDescription:'Maior intensidade encontrada',noData:'Os dados ainda não carregaram.',dataFallback:'Você pode importar o vídeo NASA original (MP4) ou imagens anuais baixadas. Nunca substituímos dados ausentes por dados fictícios.',chooseFiles:'Importar vídeo ou imagens',nasaSources:'Ver fonte NASA ↗',methodology:'METODOLOGIA',scienceTitle:'Quando os dados <em>ganham voz.</em>',scienceSubtitle:'Não são sons gravados no espaço. É ciência transformada em linguagem musical.',stepPixels:'Pixels reais',stepPixelsDesc:'As imagens de luzes noturnas da NASA são analisadas em uma grade fixa, preservando o mesmo cálculo para todos os anos.',stepTransform:'Dados em notas',stepTransformDesc:'Intensidade e distribuição dos pontos iluminados determinam volume e ritmo. A posição vertical define a altura das notas.',stepSound:'Síntese ao vivo',stepSoundDesc:'O navegador gera cada nota em tempo real com Web Audio. Nenhuma trilha pré-gravada é usada para representar os dados.',scienceNote:'Nota científica: o áudio interpreta o brilho de imagens processadas, não medições físicas calibradas. A diferença entre anos não prova, isoladamente, mudanças ambientais ou socioeconômicas. As notas são uma representação artística e acessível dos padrões visuais.',transparency:'TRANSPARÊNCIA',builtOnScience:'Construído sobre ciência aberta.',sourcesText:'EarthBeat é um projeto independente do NASA Space Apps Challenge 2026. Visualizações originais: NASA Scientific Visualization Studio, Kel Elkins; dados Black Marble / VIIRS. Não é um produto endossado pela NASA.',madeFor:'Feito para o NASA Space Apps Challenge',loadingTitle:'Carregando dados científicos',loadingHelp:'Procurando as imagens de luzes noturnas da NASA.',errorTitle:'Não foi possível carregar a imagem',errorHelp:'Importe o vídeo original da NASA ou execute scripts/prepare_nasa.sh no Ubuntu.',analyzing:'Analisando pixels reais…',progress:'Progresso da sonificação',readyYear:'Pronto para ouvir',trackStatus:'REGIÃO GLOBAL',noComparison:'Carregue os dois anos para comparar.',compareDelta:'Mudança do índice visual',downloadDone:'WAV exportado',unsupported:'Seu navegador não suporta este recurso.',importVideo:'Extraindo 12 quadros anuais do vídeo NASA…',importCount:'Arquivos importados:',unknownYear:'Nome de imagem sem ano (2012–2023):',srcProxy:'imagem NASA via proxy',srcLocal:'imagem NASA local',
-  },
-  en: {
-    navExplore:'Explore',navScience:'The science',navSources:'Sources',realData:'NASA DATA',
-    heroTitle:'The planet <em>is not silent.</em><br>You just need to <em>listen.</em>',heroText:'We turn real NASA imagery into an interactive musical experience. Explore a decade of nighttime lights and discover Earth’s patterns through sound.',startExploring:'Start exploring',howItWorks:'How it works',yearsOfData:'years of imagery',sourceVerified:'scientific source',liveAudio:'synthesized audio',experience:'EXPERIENCE',hearTheWorld:'Hear the world change.',exploreSubtitle:'Choose a year, press play, and let the imagery turn into music.',loadingData:'Fetching NASA imagery…',ready:'NASA IMAGE LOADED',failed:'DATA UNAVAILABLE',local:'LOCAL NASA FILE',satelliteView:'SATELLITE VISUALIZATION',importImage:'Import NASA video/images',timeTravel:'TIME TRAVEL',timelineHint:'Every year uses a different NASA image. The musical mapping stays fixed.',soundStudio:'SOUND STUDIO',yourEarthYourSound:'Your Earth. Your sound.',nightLights:'Night Lights Sonata',volume:'Volume',speed:'Playback speed',explorationZone:'ANALYZED IMAGE REGION',wholePlanet:'Full image',westernHalf:'Left half',easternHalf:'Right half',centralHalf:'Middle band',compareYears:'Compare years',compareDesc:'Hear two years side by side.',compareTo:'Compare with:',listenA:'Listen to A',listenB:'Listen to B',exportWav:'Export WAV audio',keyboardHint:'Shortcuts: Space to play/pause, ← → to change year.',litPixels:'Lit pixels',litDescription:'Fraction of image above threshold',avgIntensity:'Average brightness',meanDescription:'Relative visual index (0–100)',peakIntensity:'Peak intensity',peakDescription:'Brightest pixel detected',noData:'The data has not loaded yet.',dataFallback:'Import the original NASA video (MP4) or downloaded annual images. Missing data is never replaced with invented values.',chooseFiles:'Import video or images',nasaSources:'See NASA source ↗',methodology:'METHODOLOGY',scienceTitle:'When data <em>finds its voice.</em>',scienceSubtitle:'These are not sounds recorded in space. This is science translated into a musical language.',stepPixels:'Real pixels',stepPixelsDesc:'NASA nighttime lights images are sampled on a fixed grid, using the same analysis for every year.',stepTransform:'Data into notes',stepTransformDesc:'Intensity and distribution of lit pixels control volume and rhythm. Vertical location controls pitch.',stepSound:'Live synthesis',stepSoundDesc:'The browser synthesizes notes in real time using Web Audio. No prerecorded soundtrack represents the data.',scienceNote:'Science note: sound reflects brightness in processed images, not calibrated physical measurements. Differences between years alone do not prove environmental or socioeconomic change. Musical notes provide an artistic, accessible interpretation of visual patterns.',transparency:'TRANSPARENCY',builtOnScience:'Built on open science.',sourcesText:'EarthBeat is an independent project for NASA Space Apps Challenge 2026. Original visualization: NASA Scientific Visualization Studio, Kel Elkins; Black Marble / VIIRS data. Not endorsed by NASA.',madeFor:'Made for NASA Space Apps Challenge',loadingTitle:'Loading scientific imagery',loadingHelp:'Looking for NASA nighttime light imagery.',errorTitle:'Unable to load the image',errorHelp:'Import the original NASA video or run scripts/prepare_nasa.sh on Ubuntu.',analyzing:'Analyzing real pixels…',progress:'Sonification progress',readyYear:'Ready to listen',trackStatus:'FULL IMAGE',noComparison:'Load both years to compare.',compareDelta:'Change in visual index',downloadDone:'WAV exported',unsupported:'Your browser does not support this feature.',importVideo:'Extracting 12 annual frames from NASA video…',importCount:'Files imported:',unknownYear:'No year in image filename (2012–2023):',srcProxy:'NASA image via proxy',srcLocal:'local NASA image',
-  }
-};
-function tr(key){return texts[state.language][key] || key;}
-function applyLanguage(){
-  document.documentElement.lang = state.language === 'pt' ? 'pt-BR' : 'en';
-  document.querySelectorAll('[data-i18n]').forEach(el=>{ const t=tr(el.dataset.i18n);if(t)el.textContent=t; });
-  document.querySelectorAll('[data-i18n-html]').forEach(el=>{const t=tr(el.dataset.i18nHtml);if(t)el.innerHTML=t;});
-  $('languageBtn').innerHTML = state.language === 'pt' ? 'EN <span aria-hidden="true">↗</span>' : 'PT <span aria-hidden="true">↗</span>';
-  $('languageBtn').setAttribute('aria-label',state.language === 'pt'?'Switch language to English':'Mudar idioma para português');
-  updateStatus(); updatePlaybackText(); updateDelta();
-}
-function sec(s){let n=Math.floor(s);return `${String(Math.floor(n/60)).padStart(2,'0')}:${String(n%60).padStart(2,'0')}`;}
-function renderYears(){
-  $('years').replaceChildren(); $('compareYear').replaceChildren();
-  C.years.forEach(year => {
-    const b=document.createElement('button');b.type='button';b.textContent=String(year).slice(-2);b.title=String(year);
-    b.setAttribute('aria-label',String(year));b.setAttribute('aria-pressed',year===state.year?'true':'false');
-    b.classList.toggle('active',year===state.year);b.addEventListener('click',()=>selectYear(year)); $('years').appendChild(b);
-    const o=document.createElement('option');o.value=String(year);o.textContent=year;$('compareYear').appendChild(o);
-  });
-  $('compareYear').value=String(state.compareYear);
-  $('selectedYearHeading').innerHTML=String(state.year)+' <span class="tiny-light">●</span>';
-  $('hudYear').textContent=String(state.year);
-}
-function showLoading(msg){$('mapLoading').hidden=false;$('loadingTitle').textContent=msg || tr('loadingTitle');$('loadingHelp').textContent=tr('loadingHelp');$('importButton').hidden=false;}
-function hideLoading(){$('mapLoading').hidden=true;$('errorBanner').hidden=true;state.error=false;}
-function showError(msg){state.error=true;$('mapLoading').hidden=false;$('loadingTitle').textContent=tr('errorTitle');$('loadingHelp').textContent=msg||tr('errorHelp');$('importButton').hidden=false;$('errorBanner').hidden=false;updateStatus();}
-function updateStatus(){
- const dot=$('sourceStatus').querySelector('.status-dot');
- dot.classList.toggle('loading',!state.current&&!state.error);
- dot.classList.toggle('error',state.error);
- $('sourceStatus').querySelector('span:last-child').textContent = state.error?tr('failed'):state.current?(state.current.origin==='local'||state.current.origin==='import'?tr('local'):tr('ready')):tr('loadingData');
-}
-function loadRawImage(url,ms=16000){return new Promise((resolve,reject)=>{
-  const img=new Image();let done=false;
-  const timer=setTimeout(()=>fail(new Error('Image timeout')),ms);
-  function fail(e){if(done)return;done=true;clearTimeout(timer);img.onload=img.onerror=null;reject(e);}
-  img.onload=()=>{if(done)return;done=true;clearTimeout(timer);resolve(img);};
-  img.onerror=()=>fail(new Error('Image failed: '+url.slice(0,96)));
-  img.crossOrigin='anonymous';img.src=url;
-});}
-function analyzeImage(img){
-  const c=document.createElement('canvas');c.width=C.W;c.height=C.H;
-  const x=c.getContext('2d',{willReadFrequently:true});x.drawImage(img,0,0,C.W,C.H);
-  return C.fromRGBA(x.getImageData(0,0,C.W,C.H).data,C.W,C.H);
-}
-function buildData(img,origin){return {image:img,grid:analyzeImage(img),origin};}
-function loadYear(year){
-  if(cache.has(year))return Promise.resolve(cache.get(year));
-  const local=`assets/nightlights/${year}.webp`;
-  const original=TIFF_ROOT+`nightlights_flat_series_stills_8k_only_lights.${year}.tif`;
-  const proxied='https://wsrv.nl/?url='+encodeURIComponent(original)+'&w=1440&output=webp&q=82';
-  return loadRawImage(local,4500).then(img=>buildData(img,'local')).catch(()=>loadRawImage(proxied,30000).then(img=>buildData(img,'proxy'))).then(data=>{
-    cache.set(year,data);return data;
-  });
-}
-async function selectYear(year){
-  if(!C.years.includes(year))return;
-  stopPlayback(); state.year=year;state.listeningYear=year;state.current=null;state.other=null;
-  const token=++state.loadToken;state.error=false;
-  renderYears(); resetMetrics();showLoading();updateStatus();
-  try {const data=await loadYear(year);if(token!==state.loadToken)return;state.current=data;state.listeningYear=year;hideLoading();updateMetrics();updatePlaybackText();updateSequence();updateStatus();render();
-    if(state.compare)await loadCompare();
-  } catch(e){if(token!==state.loadToken)return;console.warn('NASA image unavailable:',e.message);showError(tr('errorHelp'));updateTransport();}
-}
-async function loadCompare(){
- if(!state.current)return;const year=state.compareYear;const token=state.loadToken;
- if(year===state.year){state.other=state.current;updateDelta();return;}
- try{const data=await loadYear(year);if(token!==state.loadToken)return;state.other=data;updateDelta();render();}
- catch(e){state.other=null;updateDelta();console.warn('Comparison image unavailable',e);}
-}
-function resetMetrics(){['metricDensity','metricMean','metricPeak'].forEach(k=>$(k).textContent='—');['densityBar','meanBar','peakBar'].forEach(k=>$(k).style.width='0%');updateTransport();}
-function updateMetrics(){
- const f=C.features(state.current?.grid,state.region);if(!f){resetMetrics();return;}
- $('metricDensity').textContent=(f.density*100).toFixed(1)+'%';
- $('metricMean').textContent=(f.mean*100).toFixed(1);
- $('metricPeak').textContent=(f.peak*100).toFixed(1);
- $('densityBar').style.width=(f.density*100)+'%';$('meanBar').style.width=(f.mean*100)+'%';$('peakBar').style.width=(f.peak*100)+'%';
- $('earthCanvas').setAttribute('aria-label', `${state.year}, ${tr('litPixels')}: ${(f.density*100).toFixed(1)}%; ${tr('avgIntensity')}: ${(f.mean*100).toFixed(1)} / 100`);
- updateDelta();updateTransport();
-}
-function updateDelta(){
- if(!state.compare||!state.current||!state.other){$('deltaReadout').textContent=tr('noComparison');return;}
- const a=C.features(state.current.grid,state.region),b=C.features(state.other.grid,state.region);
- const delta=C.compare(a,b),pct=delta.meanDelta*100;
- $('deltaReadout').textContent=`${tr('compareDelta')}: ${pct>=0?'+':''}${pct.toFixed(2)} / 100 (${state.compareYear} − ${state.year})`;
-}
-function updatePlaybackText(){
- $('nowPlaying').textContent=`${state.listeningYear} · ${state.region==='all'?'GLOBAL':state.region.toUpperCase()}`;
-}
-function updateSequence(){
- const data=cache.get(state.listeningYear)||state.current;
- state.sourceSequence=data?C.sequence(data.grid,state.region,STEP_COUNT):[];
- $('duration').textContent=sec(STEP_COUNT*interval()/1000);
- updateTransport();
-}
-function interval(){return 112/state.speed;}
-function updateTransport(){
- const ok=Boolean(state.current&&!state.error);
- ['playBtn','stopBtn','restartBtn','exportBtn'].forEach(id=>$(id).disabled=!ok);
- $('playBtn').textContent=state.playing?'Ⅱ':'▶';
- $('playBtn').setAttribute('aria-label',state.playing?(state.language==='pt'?'Pausar':'Pause'):(state.language==='pt'?'Reproduzir':'Play'));
- $('disc').classList.toggle('is-playing',state.playing);
- $('progressFill').style.width=(100*state.step/STEP_COUNT)+'%';
- $('progressTrack').setAttribute('aria-valuenow',Math.round(100*state.step/STEP_COUNT));
- $('elapsed').textContent=sec(state.step*interval()/1000);
-}
-function setupAudio(){
- if(state.context)return state.context;
- const Audio=window.AudioContext||window.webkitAudioContext;
- if(!Audio)throw Error(tr('unsupported'));
- const ac=new Audio();const compressor=ac.createDynamicsCompressor();
- compressor.threshold.value=-17;compressor.knee.value=18;compressor.ratio.value=7;
- compressor.attack.value=.003;compressor.release.value=.16;
- const master=ac.createGain();master.gain.value=state.volume;
- compressor.connect(master);master.connect(ac.destination);
- state.context=ac;state.compressor=compressor;state.master=master;
- return ac;
-}
-function synthVoice(ac,receiver,voice,when,duration){
- let osc=ac.createOscillator(),gain=ac.createGain();
- osc.type='sine';osc.frequency.setValueAtTime(voice.hz,when);
- const amp=Math.max(.005,voice.amplitude*.85);
- gain.gain.setValueAtTime(.0001,when);
- gain.gain.exponentialRampToValueAtTime(amp,when+.018);
- gain.gain.exponentialRampToValueAtTime(.0001,when+duration);
- osc.connect(gain);
- if(typeof ac.createStereoPanner==='function') {const p=ac.createStereoPanner();p.pan.setValueAtTime(voice.pan,when);gain.connect(p);p.connect(receiver);} else gain.connect(receiver);
- osc.start(when);osc.stop(when+duration+.012);
-}
-function playStep(){
- if(!state.playing)return;
- if(state.step>=STEP_COUNT){pausePlayback();state.step=STEP_COUNT;updateTransport();return;}
- const ac=state.context;
- const voices=state.sourceSequence[state.step]||[];
- // Fixed data-driven voices: no invented melody notes when image is dark.
- if(ac&&ac.state==='running')for(const voice of voices)synthVoice(ac,state.compressor,voice,ac.currentTime+.006,Math.min(.24,interval()/1000*.88));
- $('waveValue').textContent=voices.length?`${Math.round(voices[0].hz)} Hz`:'— Hz';
- state.step++;updateTransport();render();
-}
-async function startPlayback(){
- if(!state.current)return;
- try{
-   const ac=setupAudio();await ac.resume();
-   state.master.gain.cancelScheduledValues(ac.currentTime);state.master.gain.setTargetAtTime(state.volume,ac.currentTime,.012);
-   if(state.step>=STEP_COUNT)state.step=0;
-   if(!state.sourceSequence.length)updateSequence();
-   state.playing=true;updateTransport();
-   if(state.timer!==null)clearInterval(state.timer);
-   playStep();state.timer=window.setInterval(playStep,interval());
- }catch(err){console.error(err);alert(err.message);}
-}
-function pausePlayback(){
- state.playing=false;if(state.timer!==null){clearInterval(state.timer);state.timer=null;}
- if(state.context&&state.master){let at=state.context.currentTime;state.master.gain.cancelScheduledValues(at);state.master.gain.setTargetAtTime(0,at,.007);}
- updateTransport();
-}
-function stopPlayback(){pausePlayback();state.step=0;$('waveValue').textContent='— Hz';updateTransport();render();}
-function restartPlayback(){stopPlayback();startPlayback();}
-function background(){
- const W=1280,H=720;
- const grad=ctx.createLinearGradient(0,0,W,H);grad.addColorStop(0,'#081b2d');grad.addColorStop(1,'#020913');ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);
- ctx.lineWidth=.7;ctx.strokeStyle='#3e8ca42e';
- for(let x=0;x<W;x+=80){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
- for(let y=0;y<H;y+=80){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
-}
-function render(){
- background();const A=state.current?.image, B=state.other?.image;
- if(A){
-  if(state.compare&&B){
-    ctx.save();ctx.beginPath();ctx.rect(0,0,640,720);ctx.clip();ctx.drawImage(A,0,0,1280,720);ctx.restore();
-    ctx.save();ctx.beginPath();ctx.rect(640,0,640,720);ctx.clip();ctx.drawImage(B,0,0,1280,720);ctx.restore();
-    ctx.fillStyle='#62f6e9';ctx.fillRect(639,0,2,720);
-    ctx.font='600 16px monospace';ctx.fillStyle='#e4ffff';ctx.fillText(String(state.year),90,680);ctx.fillText(String(state.compareYear),1130,680);
-  } else ctx.drawImage(A,0,0,1280,720);
- }
- if(A){
-  const range=C.bounds(state.region);
-  if(range[0]>0||range[1]<1){
-    ctx.fillStyle='#000d19b5';ctx.fillRect(0,0,range[0]*1280,720);ctx.fillRect(range[1]*1280,0,(1-range[1])*1280,720);
-    ctx.strokeStyle='#60f4df';ctx.lineWidth=2;ctx.strokeRect(range[0]*1280+1,5,(range[1]-range[0])*1280-2,710);
-  }
-  const [lo,hi]=range; const x=(lo+(state.step/STEP_COUNT)*(hi-lo))*1280;
-  ctx.save();ctx.globalCompositeOperation='screen';
-  let line=ctx.createLinearGradient(x-80,0,x+24,0);line.addColorStop(0,'#2ce9df00');line.addColorStop(.72,'#4df4dd44');line.addColorStop(1,'#59fff700');
-  ctx.fillStyle=line;ctx.fillRect(x-80,0,104,720);
-  ctx.fillStyle='#66ffea';ctx.shadowColor='#5be8d6';ctx.shadowBlur=22;ctx.fillRect(Math.max(0,x-1),0,2,720);
-  ctx.restore();
- }
- drawWave();$('hudScan').textContent=sec(state.step*interval()/1000);
-}
-function drawWave(){
- const W=960,H=92;wctx.fillStyle='#061421';wctx.fillRect(0,0,W,H);
- wctx.strokeStyle='#1f3b51';wctx.lineWidth=1;
- for(let x=0;x<W;x+=W/24){wctx.beginPath();wctx.moveTo(x,0);wctx.lineTo(x,H);wctx.stroke();}
- wctx.strokeStyle='#183e4e';wctx.beginPath();wctx.moveTo(0,H/2);wctx.lineTo(W,H/2);wctx.stroke();
- if(!state.current)return;
- const seq=state.sourceSequence.length?state.sourceSequence:C.sequence(state.current.grid,state.region,STEP_COUNT);
- const metrics=seq.map(group=>group.reduce((v,g)=>v+g.amplitude,0));
- wctx.beginPath();wctx.strokeStyle='#54eee2';wctx.lineWidth=2;wctx.shadowBlur=9;wctx.shadowColor='#29c8da';
- for(let x=0;x<W;x+=2){const tick=Math.floor(x/W*STEP_COUNT),a=(metrics[tick]||0);const sy=H/2+Math.sin(x*.04)*a*39+Math.sin(x*.13+tick)*a*14;
- if(x===0)wctx.moveTo(x,sy);else wctx.lineTo(x,sy);
- }wctx.stroke();wctx.shadowBlur=0;
- wctx.fillStyle='#5bffff';wctx.fillRect((state.step/STEP_COUNT)*W,0,2,H);
-}
-async function chooseListen(year){
- if(!C.years.includes(year))return;
- pausePlayback();state.step=0;
- try{if(!cache.has(year)){showLoading(tr('loadingTitle'));await loadYear(year);hideLoading();}
- state.listeningYear=year;updateSequence();updatePlaybackText();await startPlayback();}
- catch(e){showError(tr('errorHelp'));}
-}
-function exportWAV(){
- if(!state.current)return;
- const Audio=window.OfflineAudioContext||window.webkitOfflineAudioContext;
- if(!Audio){alert(tr('unsupported'));return;}
- const btn=$('exportBtn');btn.disabled=true;btn.textContent='Rendering…';
- (async()=>{
-  try{
-   const sr=22050, dt=interval()/1000, duration=dt*STEP_COUNT+.25;
-   const offline=new Audio(2,Math.ceil(duration*sr),sr);
-   const compressor=offline.createDynamicsCompressor();compressor.threshold.value=-17;compressor.ratio.value=7;
-   const master=offline.createGain();master.gain.value=state.volume;compressor.connect(master);master.connect(offline.destination);
-   const seq=C.sequence((cache.get(state.listeningYear)||state.current).grid,state.region,STEP_COUNT);
-   for(let i=0;i<seq.length;i++)for(const voice of seq[i])synthVoice(offline,compressor,voice,i*dt,Math.min(.24,dt*.88));
-   const rendered=await offline.startRendering();const wav=audioBufferToWav(rendered);const a=document.createElement('a');const url=URL.createObjectURL(new Blob([wav],{type:'audio/wav'}));
-   a.href=url;a.download=`EarthBeat_NASA_${state.listeningYear}.wav`;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000);
-  }catch(err){console.error('WAV export',err);alert(err.message);}finally{btn.disabled=false;btn.innerHTML='<span>↓</span> <span data-i18n="exportWav">'+tr('exportWav')+'</span>';}
- })();
-}
-function audioBufferToWav(buffer){
- const channels=2,samples=buffer.length,bytes=44+samples*channels*2;
- const ab=new ArrayBuffer(bytes),v=new DataView(ab),s=String.fromCharCode;let p=0;
- const writeText=t=>{for(let i=0;i<t.length;i++)v.setUint8(p++,t.charCodeAt(i));};
- const u32=n=>{v.setUint32(p,n,true);p+=4;};const u16=n=>{v.setUint16(p,n,true);p+=2;};
- writeText('RIFF');u32(bytes-8);writeText('WAVEfmt ');u32(16);u16(1);u16(channels);u32(buffer.sampleRate);u32(buffer.sampleRate*channels*2);u16(channels*2);u16(16);writeText('data');u32(samples*channels*2);
- const L=buffer.getChannelData(0),R=buffer.getChannelData(1);
- for(let i=0;i<samples;i++)for(const value of [L[i],R[i]]){const x=C.clamp(value,-1,1);v.setInt16(p,x<0?x*32768:x*32767,true);p+=2;}
- return ab;
-}
-function readFileAsImage(file){return new Promise((resolve,reject)=>{
- const object=URL.createObjectURL(file);let im=new Image();im.onload=()=>{URL.revokeObjectURL(object);resolve(im);};im.onerror=()=>{URL.revokeObjectURL(object);reject(Error('Invalid image '+file.name));};im.src=object;
-});}
-async function importVideo(file){
- showLoading(tr('importVideo'));
- const url=URL.createObjectURL(file),video=document.createElement('video');video.muted=true;video.preload='auto';video.playsInline=true;video.src=url;
- const metadata=await new Promise((resolve,reject)=>{video.onloadedmetadata=resolve;video.onerror=()=>reject(Error('Invalid video'));setTimeout(()=>reject(Error('Video metadata timeout')),13000);});
- if(!Number.isFinite(video.duration)||video.duration<=0)throw Error('Invalid NASA video duration');
- // Video supplied by the user MUST be the NASA 2012–2023 12-frame export.
- const canvas=document.createElement('canvas');canvas.width=1280;canvas.height=720;
- const work=canvas.getContext('2d',{willReadFrequently:true});
- for(let i=0;i<12;i++){
-   const time=Math.min(video.duration-.03,(i+.5)*video.duration/12);
-   await new Promise((resolve,reject)=>{const timeout=setTimeout(()=>reject(Error('Seek timeout')),10000);video.onseeked=()=>{clearTimeout(timeout);resolve();};video.currentTime=time;});
-   work.clearRect(0,0,1280,720);work.drawImage(video,0,0,1280,720);
-   const year=2012+i;
-   const img=await new Promise(resolve=>{const m=new Image();m.onload=()=>resolve(m);m.src=canvas.toDataURL('image/webp',.85);});
-   cache.set(year,buildData(img,'import'));
- }
- URL.revokeObjectURL(url);video.src='';
-}
-async function importFiles(files){
- const items=Array.from(files||[]);if(!items.length)return;
- stopPlayback();let count=0;
- try {
-  for(const file of items){
-   if(file.type.startsWith('video/')||file.name.toLowerCase().endsWith('.mp4')){
-    const confirmed=window.confirm(state.language==='pt'?'Este vídeo precisa ser o NASA nightlights_flat_series_stills_only_lights_2160p3_h265.mp4 original, com 12 quadros de 2012 a 2023. Confirmar?':'This must be NASA’s original 12-frame nighttime lights video (2012–2023). Confirm?');
-    if(!confirmed)continue;
-    await importVideo(file);count+=12;continue;
-   }
-   const match=file.name.match(/20(?:1[2-9]|2[0-3])/);
-   if(!match){console.warn(tr('unknownYear'),file.name);continue;}
-   const img=await readFileAsImage(file),data=buildData(img,'import');cache.set(Number(match[0]),data);count++;
-  }
-  if(count){state.loadToken++;await selectYear(cache.has(state.year)?state.year:Number([...cache.keys()].sort()[0]));}
-  else showError(tr('unknownYear'));
- }catch(e){console.error('Import:',e);showError(e.message);}
- $('fileImport').value='';
-}
-function setupEvents(){
- $('languageBtn').addEventListener('click',()=>{state.language=state.language==='pt'?'en':'pt';applyLanguage();renderYears();updateTransport();});
- $('playBtn').addEventListener('click',()=>state.playing?pausePlayback():startPlayback());
- $('stopBtn').addEventListener('click',stopPlayback);$('restartBtn').addEventListener('click',restartPlayback);
- $('volume').addEventListener('input',e=>{state.volume=Number(e.target.value)/100;$('volumeOutput').textContent=e.target.value+'%';if(state.master&&state.context){state.master.gain.setTargetAtTime(state.volume,state.context.currentTime,.015);}});
- $('speed').addEventListener('input',e=>{state.speed=Number(e.target.value)/100;$('speedOutput').textContent=state.speed+'×';if(state.playing){clearInterval(state.timer);state.timer=setInterval(playStep,interval());}updateTransport();});
- $('region').addEventListener('change',e=>{state.region=e.target.value;stopPlayback();updateMetrics();updateSequence();updatePlaybackText();render();});
- $('compareToggle').addEventListener('change',async e=>{state.compare=e.target.checked;$('compareDetails').hidden=!state.compare;stopPlayback();state.other=null;if(state.compare)await loadCompare();render();updateDelta();});
- $('compareYear').addEventListener('change',async e=>{state.compareYear=Number(e.target.value);state.other=null;if(state.compare)await loadCompare();render();});
- $('listenA').addEventListener('click',()=>chooseListen(state.year));$('listenB').addEventListener('click',()=>chooseListen(state.compareYear));
- $('exportBtn').addEventListener('click',exportWAV);
- $('importButton').addEventListener('click',()=>$('fileImport').click());
- $('fileImport').addEventListener('change',e=>importFiles(e.target.files));
- document.addEventListener('keydown',e=>{
-  const el=e.target;
-  if(el instanceof HTMLElement && (el.closest('input,select,textarea,button,a')||el.isContentEditable))return;
-  if(e.code==='Space'){e.preventDefault();if(state.current){state.playing?pausePlayback():startPlayback();}}
-  if(e.code==='ArrowLeft'||e.code==='ArrowRight'){e.preventDefault();selectYear(C.clamp(state.year+(e.code==='ArrowRight'?1:-1),2012,2023));}
- });
- const stage=$('mapStage');stage.addEventListener('dragover',e=>{e.preventDefault();stage.style.outline='2px dashed #55e6da';});
- stage.addEventListener('dragleave',()=>{stage.style.outline='';});
- stage.addEventListener('drop',e=>{e.preventDefault();stage.style.outline='';importFiles(e.dataTransfer.files);});
-}
-function start(){renderYears();applyLanguage();setupEvents();showLoading();updateSequence();render();selectYear(2023);}
-start();
-})();
-
-</script>
-</body>
-</html>
+  <aside class="mixer-panel" aria-label="Mixer de sonificação"><div class="mixer-top"><span class="panel-eyebrow">02 / AUDIO ENGINE</span><h3>Data-to-Sound <span>Studio</span></h3></div><div class="now-playing"><span class="vinyl" id="vinyl"><span>≋</span></span><span class="now-title" id="nowTitle">Night Lights</span><small id="nowSubtitle">12 anos · VIIRS</small></div><div class="transport"><button id="backBtn" aria-label="Voltar ao início" title="Reiniciar">↺</button><button id="playBtn" class="play-button" aria-label="Reproduzir" disabled>▶</button><button id="stopBtn" aria-label="Parar" title="Parar" disabled>■</button></div><div class="progress-visual"><div id="progressFill"></div></div><div class="progress-caption"><span id="elapsed">00:00</span><span id="duration">00:20</span></div>
+   <div class="mixer-divider"></div>
+   <label class="control-label" for="volume"><span>VOLUME</span><b id="volumeValue">62%</b></label><input type="range" id="volume" min="0" max="100" value="62" aria-label="Volume">
+   <label class="control-label" for="tempo"><span>VELOCIDADE</span><b id="tempoValue">1.0×</b></label><input type="range" id="tempo" min="50" max="180" step="10" value="100" aria-label="Velocidade">
+   <label class="control-label" for="timbre"><span>ESTILO MUSICAL</span><b>◈</b></label><select id="timbre"><option value="ambient">Ambient / Atmosférico</option><option value="pulse">Pulse / Rítmico</option><option value="harmonic">Harmonic / Melódico</option></select>
+   <label class="control-label" for="zone"><span>REGIÃO DE LEITURA</span><b>⌖</b></label><select id="zone"><option value="all">Imagem inteira</option><option value="west">Metade esquerda</option><option value="east">Metade direita</option><option value="center">Região central</option></select>
+   <div class="mix-divider"></div><label class="switchline mix-switch"><input type="checkbox" id="mixToggle"><span>MISTURAR COM OUTRA FONTE</span></label><div id="mixOptions" hidden><label class="control-label" for="mixSource"><span>SEGUNDA CAMADA</span></label><select id="mixSource"></select><p class="tiny-note">As duas imagens geram vozes independentes; não representam grandezas equivalentes.</p></div>
+   <button class="download-button" id="exportBtn" disabled>↓ &nbsp; Exportar composição WAV</button><p class="keyboard-tip">ESPAÇO: tocar/pausar · ← →: mudar quadro</p>
+  </aside>
+ </div>
+ <div class="stats-grid"><div class="stat-box"><span>◉ &nbsp; ÍNDICE VISUAL MÉDIO</span><b id="statMean">—</b><p id="statMeanHelp">Brilho relativo da imagem (não calibrado)</p><div class="meter"><span id="meanMeter"></span></div></div><div class="stat-box"><span>◇ &nbsp; PIXELS ATIVOS</span><b id="statDensity">—</b><p>Porcentagem acima do limiar visual</p><div class="meter"><span id="densityMeter"></span></div></div><div class="stat-box"><span>♫ &nbsp; EVENTOS SONOROS</span><b id="statNotes">—</b><p>Notas calculadas a partir dos quadros</p><div class="meter"><span id="notesMeter"></span></div></div><div class="stat-box insight"><span>✳ &nbsp; NOTA CIENTÍFICA</span><p id="scienceInsight">Os pixels representam uma visualização processada; não correspondem diretamente a medições físicas.</p><a id="sourceLink" href="https://svs.gsfc.nasa.gov/5276/" target="_blank" rel="noopener">Ver fonte NASA ↗</a></div></div>
+ <div class="comparison-block" id="comparisonBlock"><div><span class="panel-eyebrow">03 / CHANGE DETECTOR</span><h3>Compare o mesmo planeta em <em>dois momentos.</em></h3><p>Uma comparação visual A/B, com escalas idênticas. Não é uma avaliação quantitativa de radiância física.</p></div><div class="compare-actions"><label for="compareA">ANO A<select id="compareA"></select></label><label for="compareB">ANO B<select id="compareB"></select></label><button id="compareBtn" class="button-primary">Comparar A/B ↗</button><span id="compareReadout" role="status" aria-live="polite"></span></div></div>
+</section>
+<section class="method-section" id="metodo"><div class="section-head"><div><p class="section-kicker">02 / SCIENTIFIC INTEGRITY</p><h2>Não é uma trilha sonora.<br><em>É o próprio dado tocando.</em></h2><p>Um algoritmo determinístico observa cada quadro científico e converte características visuais em eventos musicais. O som não é gerado por IA.</p></div></div><div class="method-grid"><article><span class="method-number">01 / CAPTURE</span><div class="method-icon">▦</div><h3>Visualizações NASA</h3><p>Imagens e quadros de animações científicas originais do NASA SVS, preparados automaticamente para o site.</p></article><article><span class="method-number">02 / ENCODE</span><div class="method-icon">⊞</div><h3>Pixels → parâmetros</h3><p>A distribuição espacial, a luminosidade e as cores controlam notas, dinâmica e panorâmica, sempre com o mesmo mapeamento para uma fonte.</p></article><article><span class="method-number">03 / LISTEN</span><div class="method-icon">♫</div><h3>Instrumentos ao vivo</h3><p>O Web Audio API sintetiza cada evento diretamente no dispositivo, sem áudio pré-gravado ou conexão com um modelo de música.</p></article><article><span class="method-number">04 / UNDERSTAND</span><div class="method-icon">⌖</div><h3>Ciência responsável</h3><p>Índices derivados das cores renderizadas não são concentrações ou grandezas científicas calibradas. Mostramos sempre origem e limites.</p></article></div></section>
+<section class="sources-section" id="fontes"><div><p class="section-kicker">03 / OPEN SCIENCE</p><h2>Powered by curiosity.<br><em>Grounded in NASA.</em></h2><p>EarthBeat é um projeto independente para o NASA Space Apps Challenge 2026. A origem científica é o NASA Scientific Visualization Studio; a sonificação e a interface são de autoria da equipe, com assistência de IA documentada.</p><a class="button-ghost" href="https://github.com/danipaises/earthbeat/blob/main/docs/SCIENCE.md" target="_blank" rel="noopener">Ver metodologia completa ↗</a></div><div class="source-cloud" id="sourceCloud"></div></section>
+</main><footer class="footer"><a class="footer-brand" href="#top">EARTH<span>BEAT</span></a><p>HEAR THE EARTH · UNDERSTAND ITS CHANGES</p><p>NASA SPACE APPS 2026 <span>·</span> <a href="classic.html">Versão clássica</a></p></footer>
+</div>
+<div id="srStatus" role="status" aria-live="polite" class="sr-only"></div>
+<script src="src/sonification.js" defer></script><script src="src/observatory.js" defer></script>
+</body></html>
