@@ -31,7 +31,7 @@ NASA's Earth Information Center and Scientific Visualization Studio make complex
 
 ### What we built
 
-We created six interactive sound experiences: Night Lights (Black Marble), Living Oceans (ECCO2), Atmospheric Aerosols (GEOS), Carbon Pulse (DYAMOND CO₂), Forest Voices (GEDI), and Lightning Beats (ISS Lightning Imaging Sensor). The interface includes a mission-control dashboard, optional 3D globe for compatible flat imagery, a 2D viewer for other material, frame navigation, night-light year comparison, region controls, a two-source sound mixer, adjustable audio settings, and WAV export. The site includes Portuguese and English text.
+We created six interactive sound experiences: Night Lights (Black Marble), Living Oceans (ECCO2), Atmospheric Aerosols (GEOS), Carbon Pulse (DYAMOND CO₂), Forest Voices (GEDI), and Lightning Beats (ISS Lightning Imaging Sensor). The interface includes a mission-control dashboard, optional 3D globe for compatible flat imagery, a 2D viewer for other material, frame navigation, night-light year comparison with independently synthesized A/B listening, complete 84-step playback per NASA frame, region controls, a two-source sound mixer, adjustable audio settings, and WAV export. The site includes Portuguese and English text.
 
 ### How it works
 
@@ -86,6 +86,10 @@ No non-NASA scientific datasets were used. Third-party technical platforms and r
 - [ ] Confirm the selected SI categories match what was actually used.
 - [ ] List sources in the correct NASA and other-data fields.
 - [ ] Review all human-team contributions and scientific statements.
+- [ ] Cite the MIT source-code license and [third-party notices](THIRD_PARTY_NOTICES.md), including Google Fonts and FFmpeg.
+- [ ] Listen to both A and B and confirm that the sound changes when the data change.
+- [ ] Verify each automatic animation frame plays all 84 scan steps before changing.
+- [ ] Verify canvas descriptions with a screen reader; do not claim formal accessibility certification without testing.
 - [ ] Save Progress regularly. **Saving is not submission.**
 - [ ] Click **Submit for Judging** once the team is ready.
 - [ ] Confirm the submission-success notice before Nov 15, 2026, 11:59 PM **local event time**. The submission is final.
