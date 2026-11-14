@@ -23,6 +23,29 @@ if(!executable)throw new Error('Chromium or Google Chrome not installed on GitHu
   assert.match(await page.locator('#spaceCanvas').getAttribute('aria-label'),/2023/);
   assert.equal(await page.locator('#playBtn').isEnabled(),true);
   await page.screenshot({path:path.join(out,'01-nasa-nightlights.png'),fullPage:true});
+  await page.locator('#startMission').click();
+  await page.locator('#missionPanel').waitFor({state:'visible'});
+  assert.match(await page.locator('#missionTitle').innerText(),/cidades/i);
+  await page.locator('#missionNext').click();
+  await page.waitForFunction(()=>document.querySelector('#stageTag')?.textContent.includes('OCEAN'));
+  assert.match(await page.locator('#missionTitle').innerText(),/correntes/i);
+  await page.locator('#missionSound').click();
+  await page.waitForTimeout(250);
+  assert.equal(await page.locator('#playBtn').innerText(),'Ⅱ');
+  await page.screenshot({path:path.join(out,'04-nasa-guided-mission.png'),fullPage:true});
+  await page.locator('#missionClose').click();
+  await page.locator('[data-module="lights"]').click();
+  await waitReady();
+  await page.locator('#analyzeYears').click();
+  await page.waitForFunction(()=>document.querySelectorAll('#yearTableBody tr').length===12);
+  assert.match(await page.locator('#yearChart').getAttribute('aria-label'),/2012/);
+  assert.match(await page.locator('#yearChart').getAttribute('aria-label'),/2023/);
+  await page.locator('#yearTableToggle').click();
+  assert.equal(await page.locator('#yearTableBody tr').count(),12);
+  const download=page.waitForEvent('download',{timeout:15000});
+  await page.locator('#yearExport').click();
+  assert.match((await download).suggestedFilename(),/\.csv$/);
+  await page.screenshot({path:path.join(out,'05-real-nasa-annual-analysis.png'),fullPage:true});
   await page.locator('#compareA').selectOption('2012');
   await page.locator('#compareB').selectOption('2023');
   await page.locator('#compareBtn').click();
@@ -45,7 +68,7 @@ if(!executable)throw new Error('Chromium or Google Chrome not installed on GitHu
   assert.equal(await page.locator('html').getAttribute('lang'),'en');
   await page.setViewportSize({width:390,height:844});
   await page.screenshot({path:path.join(out,'03-mobile-oceans.png'),fullPage:true});
-  console.log('BROWSER SMOKE PASS: authentic NASA frames, accessible descriptions, A/B audio, ocean switch, English locale, mobile rendering.');
+  console.log('BROWSER SMOKE PASS: authentic NASA frames, 6-step guided mission, real 12-year image analysis, accessible CSV, A/B audio, ocean switch, English locale, mobile rendering.');
   assert.deepEqual(errs,[],'Unexpected browser page errors');
  }finally{await browser.close();}
 })().catch(e=>{console.error('BROWSER SMOKE FAIL:',e);process.exitCode=1;});
