@@ -78,7 +78,17 @@ No non-NASA scientific datasets were used. Third-party technical platforms and r
 | GitHub — Source Repository & GitHub Pages Deployment | https://github.com/danipaises/earthbeat |
 | W3C — Web Audio API Standard | https://www.w3.org/TR/webaudio/ |
 
+## Additional demonstrable features
+
+The latest EarthBeat release introduces a guided six-chapter scientific tour, a live six-band sonification telemetry panel, and an on-demand 2012–2023 NASA Night Lights analysis plot with accessible data table and downloadable descriptive CSV. All values in that plot are computed from original NASA SVS image pixels in-browser and deliberately **are not** labeled as calibrated radiance measurements.
+
+Demonstrate the new tour by clicking **Guided NASA tour**, listening to at least two different original images, explaining one scientific limitation, and opening the annual analysis graph. Do not state that this is a time series of directly measured physical light emission.
+
 ## Final checklist
+- [ ] Confirm the guided tour loads all six original NASA scenes and plays audio on your device.
+- [ ] Open the annual analysis chart and export CSV; verify all 12 source-year images were available.
+- [ ] Show how the six-band telemetry follows live audio and actual image differences.
+
 
 - [ ] Open both the public project and the seven-slide demo in a private/incognito browser.
 - [ ] Test audio and source media on a phone and a desktop.
