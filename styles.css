@@ -19,3 +19,13 @@
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.001ms!important;transition-duration:.001ms!important}}
 
 [hidden]{display:none!important}.screen.globe .scan-beam{display:none}.screen-empty.failed .loader-orb{border-color:#d5a174;border-top-color:#ffdeae;animation:none}
+
+/* NASA Space Apps accessibility and sonic A/B comparison */
+.compare-listen{display:flex;gap:8px;align-items:center;justify-content:stretch;width:100%;flex-wrap:wrap}
+.compare-listen[hidden]{display:none!important}
+.compare-listen button{flex:1 1 124px;min-height:44px;padding:10px 13px;border-radius:8px;background:#123c49;color:#d9faf7;border:1px solid #427785;font-weight:700;font-size:12px;transition:background .15s,border-color .15s}
+.compare-listen button[aria-pressed="true"]{background:linear-gradient(105deg,#52e5d0,#68aef8);border-color:#6beedd;color:#05232a}
+.compare-listen button:hover{border-color:var(--accent)}
+.compare-listen button:focus-visible{outline:3px solid #ffed8a;outline-offset:2px}
+.time-buttons button{min-height:38px}
+@media(prefers-reduced-motion:reduce){.scan-beam{transition:none!important}}
