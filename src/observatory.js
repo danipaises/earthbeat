@@ -2,8 +2,8 @@
  * No synthetic scientific datasets, no cloud synthesis, no API key, no build tooling.
  */
 (()=>{'use strict';
-const S=window.EarthBeatScience,$=id=>document.getElementById(id);
-if(!S)throw new Error('Science engine did not load');
+const S=window.EarthBeatScience,P=window.EarthBeatPlayback,$=id=>document.getElementById(id);
+if(!S||!P)throw new Error('Science or playback engine did not load');
 const MODULES={
  lights:{name:'Luzes noturnas',en:'Night lights',subtitle:'Black Marble / VIIRS',icon:'✧',tag:'NASA / BLACK MARBLE',source:'https://svs.gsfc.nasa.gov/5276/',note:'2012–2023: médias anuais de luzes noturnas visualizadas pela NASA. O índice sonoro mede brilho de imagem, não radiância calibrada.',enNote:'2012–2023: annual nighttime-lights visualizations. The sound index is image brightness, not calibrated radiance.',year:true,globe:true,frames:12,color:'#6ce9d9',timbre:'sine',detail:'12 anos · VIIRS'},
  ocean:{name:'Oceanos vivos',en:'Living oceans',subtitle:'ECCO2 / Temperatura + correntes',icon:'≋',tag:'NASA / ECCO2 OCEAN',source:'https://svs.gsfc.nasa.gov/3912/',note:'Correntes superficiais coloridas segundo temperatura no modelo ECCO2. Cada quadro vem de uma animação; cores não são graus Celsius.',enNote:'ECCO2 surface currents colored by temperature. Frames sample an animation; colors are not Celsius readings.',year:false,globe:true,frames:8,color:'#52bafd',timbre:'sine',detail:'8 quadros · ECCO2'},
@@ -13,7 +13,7 @@ const MODULES={
  lightning:{name:'Batidas do céu',en:'Lightning beats',subtitle:'ISS / Lightning Imaging Sensor',icon:'ϟ',tag:'NASA / ISS LIS',source:'https://svs.gsfc.nasa.gov/5011/',note:'Um quadro de apresentação NASA sobre detecções LIS na ISS (2017–2023). As batidas derivam de pixels amarelos da imagem e não representam a frequência real de raios.',enNote:'An illustrative NASA image of ISS LIS detections (2017–2023). Beats follow yellow pixels, not actual lightning-event frequencies.',year:false,globe:false,frames:1,color:'#f1d078',timbre:'square',detail:'1 quadro · LIS'}
 };
 const IDS=Object.keys(MODULES);
-const state={id:'lights',frame:11,cache:new Map(),image:null,grid:null,metrics:null,sequence:[],region:'all',view:'globe',playing:false,step:0,timer:0,audio:null,master:null,limiter:null,speed:1,volume:.62,load:0,compare:false,compareData:null,mix:false,mixGrid:null,mixSequence:[],mixId:'ocean',lang:'pt',frameLoading:false,globe:null};
+const state={id:'lights',frame:11,cache:new Map(),image:null,grid:null,metrics:null,sequence:[],region:'all',view:'globe',playing:false,step:0,timer:0,audio:null,master:null,limiter:null,speed:1,volume:.62,load:0,compare:false,compareData:null,compareAudioSource:'A',mix:false,mixGrid:null,mixSequence:[],mixId:'ocean',lang:'pt',frameLoading:false,globe:null};
 const reducedMotion=window.matchMedia?.('(prefers-reduced-motion: reduce)').matches||false;
 const nameOf=id=>state.lang==='pt'?MODULES[id].name:MODULES[id].en;
 const frameName=(id,frame)=>id==='lights'?String(2012+frame):String(frame+1).padStart(2,'0');
@@ -59,6 +59,8 @@ async function loadFrame(id,frame,{keepPlay=false}={}){
   const im=await getImage(id,frame);if(token!==state.load||id!==state.id)return;
   const grid=makeData(im,id),metrics=S.metrics(grid,state.region),sequence=S.notes(grid,state.region);
   state.image=im;state.grid=grid;state.metrics=metrics;state.sequence=sequence;
+  $('spaceCanvas').setAttribute('aria-label',`${nameOf(id)}, ${frameName(id,frame)}. ${state.lang==='pt'?'Índice de brilho visual':'Visual brightness index'}: ${(metrics.mean*100).toFixed(1)} / 100. ${state.lang==='pt'?'Pixels ativos':'Active pixels'}: ${(metrics.density*100).toFixed(1)}%. ${state.lang==='pt'?'Valores de imagem, não medições físicas':'Image-derived values, not physical measurements'}.`);
+  $('signalCanvas').setAttribute('aria-label',`${nameOf(id)}: ${sequence.reduce((a,b)=>a+b.length,0)} ${state.lang==='pt'?'notas produzidas a partir de pixels':'notes derived from image pixels'}.`);
   $('frameCounter').textContent=`FRAME ${String(frame+1).padStart(2,'0')} / ${String(m.frames).padStart(2,'0')}`;
   $('frameLabel').textContent=frameName(id,frame);$('screenSeries').textContent=m.tag;
   $('sessionState').textContent=state.lang==='pt'?'NASA VISUAL CARREGADO':'NASA VISUAL LOADED';$('stageTag').textContent=m.tag;
@@ -72,7 +74,7 @@ async function loadFrame(id,frame,{keepPlay=false}={}){
  }finally{if(token===state.load)state.frameLoading=false;}
 }
 function updateFrameMeta(){$('nowTitle').textContent=nameOf(state.id);$('nowSubtitle').textContent=`${frameName(state.id,state.frame)} · ${MODULES[state.id].subtitle}`;$('moduleGlyph').textContent=MODULES[state.id].icon;}
-function selectModule(id){if(!MODULES[id])return;stopPlayback();state.id=id;state.frame=id==='lights'?11:0;state.compare=false;state.compareData=null;state.view=MODULES[id].globe?'globe':'map';state.step=0;state.image=null;state.grid=null;state.sequence=[];state.metrics=null;
+function selectModule(id){if(!MODULES[id])return;stopPlayback();state.id=id;state.frame=id==='lights'?11:0;state.compare=false;state.compareData=null;state.compareAudioSource='A';$('compareListenControls').hidden=true;state.view=MODULES[id].globe?'globe':'map';state.step=0;state.image=null;state.grid=null;state.sequence=[];state.metrics=null;
  document.documentElement.style.setProperty('--accent',MODULES[id].color);document.documentElement.style.setProperty('--glow',MODULES[id].color+'33');
  if(!state.globe)state.view='map';$('screen').classList.toggle('globe',state.view==='globe');$('screen').classList.remove('fullscreen');document.body.classList.remove('screen-expanded');$('viewBtn').textContent=state.view==='globe'?'◉ GLOBO':'▣ MAPA';$('viewBtn').disabled=!MODULES[id].globe;
  $('autoFrames').checked=!MODULES[id].year&&MODULES[id].frames>1;
@@ -83,7 +85,7 @@ function selectModule(id){if(!MODULES[id])return;stopPlayback();state.id=id;stat
  updateCatalog();populateTime();updateFrameMeta();updatePlayLabel();loadFrame(id,state.frame);
 }
 function setFrame(index,{keepPlay=false}={}){const m=MODULES[state.id];if(index<0||index>=m.frames)return;
- if(!keepPlay)stopPlayback();state.frame=index;state.step=0;state.compare=false;state.compareData=null;
+ if(!keepPlay)stopPlayback();state.frame=index;state.step=0;state.compare=false;state.compareData=null;state.compareAudioSource='A';$('compareListenControls').hidden=true;
  loadFrame(state.id,index,{keepPlay});
 }
 function updateScreen(){
@@ -124,14 +126,18 @@ async function togglePlay(){if(state.playing){pausePlayback();return;}if(!state.
   state.playing=true;stopTick();stepPlayback();state.timer=setInterval(stepPlayback,interval());updatePlayLabel();}
  catch(e){console.error(e);alert('Não foi possível iniciar o áudio: '+e.message);}
 }
-function stepPlayback(){if(!state.playing||!state.grid)return;const a=state.audio;if(!a)return;
- if(state.step>=S.STEPS)state.step=0;
+function stepPlayback(){
+ if(!state.playing||!state.grid||state.frameLoading)return;
+ const a=state.audio;if(!a)return;
+ // Complete all 84 sound steps before moving to a new NASA frame.
+ const boundary=P.resolveBoundary({step:state.step,steps:S.STEPS,frame:state.frame,frameCount:MODULES[state.id].frames,auto:$('autoFrames').checked&&!state.compare});
+ if(boundary.changed){setFrame(boundary.frame,{keepPlay:true});return;}
+ state.step=boundary.step;
  const notes=state.sequence[state.step]||[],dur=Math.min(.32,interval()/1000*.88);
  for(const n of notes)emit(a,state.limiter,n,a.currentTime+.008,dur,.85,waveformType(state.id));
- if(state.mix&&state.mixSequence.length){const t=state.mixSequence[state.step]||[];for(const n of t)emit(a,state.limiter,n,a.currentTime+.008,dur,.34,waveformType(state.mixId));}
+ if(state.mix&&state.mixSequence.length){for(const n of state.mixSequence[state.step]||[])emit(a,state.limiter,n,a.currentTime+.008,dur,.34,waveformType(state.mixId));}
  $('voiceLabel').textContent=`${state.id.toUpperCase()} · ${notes.length?Math.round(notes[0].hz)+' Hz':'SILENCE / 0 Hz'}`;
  state.step++;updatePlayLabel();updateSignal();
- if(MODULES[state.id].frames>1&&$('autoFrames').checked&&state.step%14===0){const next=(state.frame+1)%MODULES[state.id].frames;setFrame(next,{keepPlay:true});}
 }
 function pausePlayback(){state.playing=false;stopTick();if(state.audio&&state.master){const t=state.audio.currentTime;state.master.gain.cancelScheduledValues(t);state.master.gain.setTargetAtTime(.0001,t,.018);}updatePlayLabel();}
 function stopPlayback(){pausePlayback();state.step=0;updatePlayLabel();updateSignal();}
@@ -158,11 +164,34 @@ async function exportWAV(){if(!state.grid)return;const C=window.OfflineAudioCont
 async function compare(){const a=Number($('compareA').value)-2012,b=Number($('compareB').value)-2012;if(a===b){$('compareReadout').textContent='Selecione anos diferentes.';return;}
  stopPlayback();state.id='lights';state.frame=a;state.view='map';$('screen').classList.remove('globe');$('viewBtn').textContent='▣ MAPA';
  try{const [ia,ib]=await Promise.all([getImage('lights',a),getImage('lights',b)]);const ga=makeData(ia,'lights'),gb=makeData(ib,'lights'),ma=S.metrics(ga,state.region),mb=S.metrics(gb,state.region);
-  state.image=ia;state.grid=ga;state.metrics=ma;state.sequence=S.notes(ga,state.region);state.compare=true;state.compareData={image:ib,frame:b};
+  state.image=ia;state.grid=ga;state.metrics=ma;state.sequence=S.notes(ga,state.region);state.compare=true;
+  state.compareData={image:ib,frame:b,grid:gb,aFrame:a,aGrid:ga};
+  state.compareAudioSource='A';state.mix=false;state.mixGrid=null;state.mixSequence=[];
+  $('mixToggle').checked=false;$('mixOptions').hidden=true;
+  $('compareListenControls').hidden=false;
+  $('compareListenA').setAttribute('aria-pressed','true');$('compareListenB').setAttribute('aria-pressed','false');
+  $('compareListenA').textContent=state.lang==='pt'?`▶ Ouvir A (${2012+a})`:`▶ Listen A (${2012+a})`;
+  $('compareListenB').textContent=state.lang==='pt'?`▶ Ouvir B (${2012+b})`:`▶ Listen B (${2012+b})`;
+  $('spaceCanvas').setAttribute('aria-label',`NASA Black Marble: anos ${2012+a} e ${2012+b} lado a lado. Índices visuais: A ${(ma.mean*100).toFixed(1)}, B ${(mb.mean*100).toFixed(1)} de 100. Não são valores de radiância calibrada.`);
   updateStats();updateCatalog();populateTime();updateFrameMeta();updatePlayLabel();updateScreen();hideLoading();
   const delta=S.compare(ma,mb);$('compareReadout').textContent=`${2012+a} → ${2012+b}: índice visual médio ${delta.meanDelta>=0?'+':''}${(delta.meanDelta*100).toFixed(2)} pontos · diferença descritiva de imagem, não radiância.`;
   $('frameLabel').textContent=`${2012+a} × ${2012+b}`;noteToSR('NASA Black Marble A/B comparison ready');
  }catch(err){console.error(err);$('compareReadout').textContent='Imagens originais ausentes. Execute o workflow NASA no GitHub.';}
+}
+async function listenToComparison(which){
+ if(!state.compare||!state.compareData)return;
+ pausePlayback();state.step=0;state.compareAudioSource=which;
+ const c=state.compareData;
+ const grid=which==='A'?c.aGrid:c.grid;
+ const year=2012+(which==='A'?c.aFrame:c.frame);
+ state.sequence=S.notes(grid,state.region);
+ $('compareListenA').setAttribute('aria-pressed',String(which==='A'));
+ $('compareListenB').setAttribute('aria-pressed',String(which==='B'));
+ $('nowSubtitle').textContent=`${year} · ${state.lang==='pt'?'Comparação sonora':'Sound comparison'} ${which}`;
+ $('voiceLabel').textContent=`A/B ${which} · ${year}`;
+ updateStats();updateSignal();updatePlayLabel();
+ noteToSR(`${state.lang==='pt'?'Reproduzindo ano':'Playing year'} ${year}. ${state.lang==='pt'?'Os parâmetros musicais são idênticos para A e B':'Identical musical parameters used for A and B'}.`);
+ await togglePlay();
 }
 function setupGlobe(){const canvas=$('globeCanvas');let gl;try{gl=canvas.getContext('webgl2',{alpha:true,antialias:true,preserveDrawingBuffer:false});}catch(e){}if(!gl){$('viewBtn').disabled=true;return null;}
  const vertex=`#version 300 es\nin vec2 pos;out vec2 uv;void main(){uv=(pos+1.0)*.5;gl_Position=vec4(pos,0.0,1.0);}`;
@@ -220,6 +249,8 @@ const englishText={
  '.comparison-block h3':'Compare the same planet at <em>two moments.</em>',
  '.comparison-block p':'An A/B visual comparison with identical image mapping. This is not quantitative calibrated radiance.',
  '#compareBtn':'Compare A/B ↗',
+ '#compareListenA':'▶ Listen to A',
+ '#compareListenB':'▶ Listen to B',
  '.method-section .section-head h2':'Not a soundtrack.<br><em>It is the data making music.</em>',
  '.method-section .section-head p:not(.section-kicker)':'A deterministic algorithm scans each NASA science image and maps visual features to notes. The sound is not AI-generated.',
  '.method-grid article:nth-child(1) h3':'NASA visualizations',
@@ -267,11 +298,18 @@ function setup(){
  $('viewBtn').addEventListener('click',globeToggle);$('fullBtn').addEventListener('click',fullToggle);
  $('volume').addEventListener('input',e=>{state.volume=Number(e.target.value)/100;$('volumeValue').textContent=e.target.value+'%';if(state.audio&&state.master)state.master.gain.setTargetAtTime(state.volume,state.audio.currentTime,.015);});
  $('tempo').addEventListener('input',e=>{state.speed=Number(e.target.value)/100;$('tempoValue').textContent=state.speed.toFixed(1)+'×';if(state.playing){stopTick();state.timer=setInterval(stepPlayback,interval());}updatePlayLabel();});
- $('zone').addEventListener('change',e=>{state.region=e.target.value;stopPlayback();if(state.grid){state.metrics=S.metrics(state.grid,state.region);state.sequence=S.notes(state.grid,state.region);updateStats();updateSignal();}if(state.mixGrid)state.mixSequence=S.notes(state.mixGrid,state.region);});
+ $('zone').addEventListener('change',e=>{state.region=e.target.value;stopPlayback();if(state.grid){state.metrics=S.metrics(state.grid,state.region);
+  const chosen=state.compare&&state.compareData&&state.compareAudioSource==='B'?state.compareData.grid:state.grid;
+  state.sequence=S.notes(chosen,state.region);updateStats();updateSignal();
+  if(state.compare&&state.compareData){const mb=S.metrics(state.compareData.grid,state.region),delta=S.compare(state.metrics,mb);
+   $('compareReadout').textContent=`${2012+state.compareData.aFrame} → ${2012+state.compareData.frame}: ${state.lang==='pt'?'índice médio visual':'mean visual index'} ${delta.meanDelta>=0?'+':''}${(delta.meanDelta*100).toFixed(2)} / 100. ${state.lang==='pt'?'Não é radiância calibrada':'Not calibrated radiance'}.`;}
+ }if(state.mixGrid)state.mixSequence=S.notes(state.mixGrid,state.region);});
  $('timbre').addEventListener('change',()=>{if(state.playing)noteToSR('Synthesizer timbre changed');});
  $('mixToggle').addEventListener('change',async e=>{state.mix=e.target.checked;$('mixOptions').hidden=!state.mix;if(state.mix){await loadMix();}});
  $('mixSource').addEventListener('change',async e=>{state.mixId=e.target.value;if(state.mix)await loadMix();});
  $('exportBtn').addEventListener('click',exportWAV);$('compareBtn').addEventListener('click',compare);
+ $('compareListenA').addEventListener('click',()=>listenToComparison('A'));
+ $('compareListenB').addEventListener('click',()=>listenToComparison('B'));
  $('screen').addEventListener('dblclick',fullToggle);
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('screen').classList.contains('fullscreen')){fullToggle();return;}
   if(e.target instanceof HTMLElement&&e.target.closest('button,select,input,textarea,a,[contenteditable]'))return;
