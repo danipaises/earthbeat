@@ -67,6 +67,7 @@ async function loadFrame(id,frame,{keepPlay=false}={}){
   updateStats();updateFrameMeta();updateScreen();timeButtonState();updateSignal();hideLoading();updatePlayLabel();
   if(state.view==='globe')state.globe?.setTexture(im);
   noteToSR(`NASA SVS: ${nameOf(id)}, ${frameName(id,frame)} loaded`);
+  window.dispatchEvent(new CustomEvent('earthbeat:frame',{detail:{id,frame,mean:metrics.mean,density:metrics.density,lang:state.lang}}));
  }catch(err){if(token!==state.load)return;console.error(err);state.image=null;state.grid=null;state.sequence=[];state.metrics=null;state.playing=false;stopTick();updatePlayLabel();
   $('sessionState').textContent='ARQUIVOS NASA AUSENTES';updateStats();updateScreen();
   setLoading(state.lang==='pt'?'Não foi possível carregar os dados da NASA':'NASA data unavailable',`${state.lang==='pt'?'Consulte a fonte NASA e o script':'See NASA source and build script'} scripts/prepare_observatory.sh. ${err.message}`,true);
@@ -87,11 +88,11 @@ function selectModule(id){if(!MODULES[id])return;stopPlayback();state.id=id;stat
  $('mixSource').querySelectorAll('option').forEach(el=>el.disabled=el.value===id);
  if(state.mixId===id)state.mixId=IDS.find(x=>x!==id);
  $('mixSource').value=state.mixId;
- updateCatalog();populateTime();updateFrameMeta();updatePlayLabel();loadFrame(id,state.frame);
+ updateCatalog();populateTime();updateFrameMeta();updatePlayLabel();return loadFrame(id,state.frame);
 }
 function setFrame(index,{keepPlay=false}={}){const m=MODULES[state.id];if(index<0||index>=m.frames)return;
  if(!keepPlay)stopPlayback();state.frame=index;state.step=0;state.compare=false;state.compareData=null;state.compareAudioSource='A';$('compareListenControls').hidden=true;
- loadFrame(state.id,index,{keepPlay});
+ return loadFrame(state.id,index,{keepPlay});
 }
 function updateScreen(){
  const canvas=$('spaceCanvas'),ctx=canvas.getContext('2d');ctx.fillStyle='#061320';ctx.fillRect(0,0,canvas.width,canvas.height);
@@ -143,6 +144,7 @@ function stepPlayback(){
  if(state.mix&&state.mixSequence.length){for(const n of state.mixSequence[state.step]||[])emit(a,state.limiter,n,a.currentTime+.008,dur,.34,waveformType(state.mixId));}
  $('voiceLabel').textContent=`${state.id.toUpperCase()} · ${notes.length?Math.round(notes[0].hz)+' Hz':'SILENCE / 0 Hz'}`;
  state.step++;updatePlayLabel();updateSignal();
+ window.dispatchEvent(new CustomEvent('earthbeat:tick',{detail:{id:state.id,frame:state.frame,step:state.step,voices:notes.map(n=>({band:n.band,intensity:n.intensity,hz:n.hz,amplitude:n.amplitude}))}}));
 }
 function pausePlayback(){state.playing=false;stopTick();if(state.audio&&state.master){const t=state.audio.currentTime;state.master.gain.cancelScheduledValues(t);state.master.gain.setTargetAtTime(.0001,t,.018);}updatePlayLabel();}
 function stopPlayback(){pausePlayback();state.step=0;updatePlayLabel();updateSignal();}
@@ -326,5 +328,27 @@ function setup(){
  });
  selectModule('lights');
 }
+window.EarthBeatApp=Object.freeze({
+ getState:()=>({id:state.id,frame:state.frame,lang:state.lang,playing:state.playing,ready:Boolean(state.grid),compare:state.compare}),
+ selectModule: id=>selectModule(id),
+ selectFrame: index=>setFrame(index),
+ show: async (id,frame)=>{
+   if(!MODULES[id])throw Error('Unknown NASA visualization');
+   if(state.id!==id)await selectModule(id);
+   if(Number.isInteger(frame)&&frame!==state.frame)await setFrame(frame);
+   return Boolean(state.grid);
+ },
+ play:()=>state.playing?Promise.resolve():togglePlay(),
+ stop:()=>stopPlayback(),
+ getAnnualMetrics:async ()=>{
+   return Promise.all(Array.from({length:12},async (_,i)=>{
+     const image=await getImage('lights',i);
+     const grid=makeData(image,'lights');
+     const m=S.metrics(grid,'all');
+     return {year:2012+i,mean:m.mean,density:m.density,peak:m.peak};
+   }));
+ },
+ getNotes:()=>state.sequence.map(tick=>tick.length)
+});
 setup();
 })();
