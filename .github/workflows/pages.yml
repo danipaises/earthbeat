@@ -1,0 +1,55 @@
+name: Deploy EarthBeat (NASA data) to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: earthbeat-pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Build real NASA images and deploy
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Install imaging dependencies
+        run: |
+          command -v curl >/dev/null || sudo apt-get install -y curl
+          command -v ffmpeg >/dev/null || (sudo apt-get update && sudo apt-get install -y ffmpeg)
+
+      - name: Download NASA SVS annual Black Marble frames
+        run: bash scripts/prepare_nasa.sh
+
+      - name: Verify all twelve real annual images
+        shell: bash
+        run: |
+          set -euo pipefail
+          for year in {2012..2023}; do
+            test -s "assets/nightlights/${year}.webp" || { echo "NASA image missing for ${year}"; exit 1; }
+          done
+          echo "All 12 NASA annual images are available."
+
+      - name: Set up GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload static site
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: .
+
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
