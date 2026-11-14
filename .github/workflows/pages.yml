@@ -30,6 +30,11 @@ jobs:
           command -v curl >/dev/null || sudo apt-get install -y curl
           command -v ffmpeg >/dev/null || (sudo apt-get update && sudo apt-get install -y ffmpeg)
 
+      - name: Verify deterministic sonification tests
+        run: |
+          node --check src/core.js
+          node --test tests/core.test.js
+
       - name: Download NASA SVS annual Black Marble frames
         run: bash scripts/prepare_nasa.sh
 
