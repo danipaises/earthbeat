@@ -50,6 +50,18 @@ The browser now provides readable text descriptions of the current visualization
 - [Third-party credits and licensing](THIRD_PARTY_NOTICES.md)
 - [Data and NASA source registry](SOURCES.md)
 
+## Public-guided exploration and annual analysis
+
+The **six-chapter Mission Tour** is an interpretive introduction to NASA visualizations. It navigates actual project modules and narrates the mapping between displayed pixels and deterministic Web Audio notes. Its chapter descriptions are explanatory prose, not numerical scientific findings.
+
+The **2012–2023 interactive graph** is calculated directly from all 12 authentic NASA SVS 5276 frames in the browser. Each frame is sampled at the same 252×142 image dimensions, uses the same brightness mapping and pixel threshold, and generates:
+- Display-image mean brightness index = 100 × mean approximately luminance-weighted RGB pixel value.
+- Active pixels (%) = 100 × fraction of sampled image pixels exceeding the fixed threshold used by the Black Marble module.
+
+For honest interpretation, the graph keeps its y-axis anchored at **zero**. Its upper bound is chosen from the displayed values for legibility. The table and downloadable CSV show the actual extracted values. The chart and the sonic representation are **neither calibrated satellite radiance, absolute brightness in physical units, energy consumption, economic growth, nor indicators of climate change**. Correlation or causation is not inferred from visual trends.
+
+The new six-band telemetry visualizes only notes produced by the actual scientific-image sampler at the current playback step. If no notes are produced, all six bars remain near their baseline. The guidance is accessible through human-readable text and screen-reader announcements, with a corresponding zero-sound state.
+
 ## Source credit
 
 **NASA Scientific Visualization Studio**; creators and dataset providers vary by resource. See the linked SVS resource pages for original credits. The website, sound engine, and user interface are EarthBeat team's independent presentation. NASA does not endorse this app.
