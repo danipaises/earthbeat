@@ -223,6 +223,23 @@ const englishText={
  '.topnav a:nth-child(1)':'Explore',
  '.topnav a:nth-child(2)':'How it works',
  '.topnav a:nth-child(3)':'Data sources',
+ '#startMission':'✦ Guided NASA tour <span aria-hidden="true">→</span>',
+ '#missionTitle':'Explore the planet through sound',
+ '#missionCount':'01 / 06',
+ '#missionClose':'✕',
+ '#missionSound':'▶ Listen to this phenomenon',
+ '#missionPrev':'← Previous',
+ '#missionNext':'Next →',
+ '.mission-kicker':'✦ &nbsp; NASA EARTH SCIENCE / GUIDED MISSION',
+ '#telemetryPanel h3':'From pixels to sound <span>— live</span>',
+ '#insightsTitle':'A decade of <em>nighttime lights.</em>',
+ '.insights-top p':'Explore brightness indices derived from all 12 authentic NASA visualizations. The scale starts at zero: these are not calibrated radiance measurements or economic indicators.',
+ '.insights-note':'Source: NASA SVS 5276. Each number comes from pixels in the rendered NASA image using a fixed mapping. It is not a measure of energy consumption, population or physical light intensity.',
+ '#analyzeYears':'◈ Analyze 12 years',
+ '#yearTableToggle':'▦ Show accessible table',
+ '#yearExport':'↓ Export visual-index CSV',
+ '#telemetryHelp':'Six horizontal image bands generate notes. Brighter regions contribute more to relative loudness.',
+ '#telemetryNow':'Press ▶ to hear the scan.',
  '.intro-copy h1':'Hear the <span>invisible.</span><br>Feel the <i>planet.</i>',
  '.intro-description':'Six sonic worlds. Real NASA scientific imagery. One interactive instrument turning Earth patterns into music — synthesized live in your browser.',
  '.intro-actions .button-primary':'Enter the Observatory <b>↗</b>',
@@ -304,6 +321,7 @@ function setup(){
    $('compareListenA').textContent=state.lang==='pt'?`▶ Ouvir A (${2012+state.compareData.aFrame})`:`▶ Listen A (${2012+state.compareData.aFrame})`;
    $('compareListenB').textContent=state.lang==='pt'?`▶ Ouvir B (${2012+state.compareData.frame})`:`▶ Listen B (${2012+state.compareData.frame})`;
   }
+  window.dispatchEvent(new CustomEvent('earthbeat:language',{detail:{lang:state.lang}}));
   noteToSR(state.lang==='pt'?'Português':'English');});
  $('playBtn').addEventListener('click',togglePlay);$('stopBtn').addEventListener('click',stopPlayback);$('backBtn').addEventListener('click',()=>{stopPlayback();updatePlayLabel();});
  $('viewBtn').addEventListener('click',globeToggle);$('fullBtn').addEventListener('click',fullToggle);
