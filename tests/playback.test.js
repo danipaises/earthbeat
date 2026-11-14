@@ -1,0 +1,10 @@
+const test = require('node:test');
+const assert = require('node:assert/strict');
+const {resolveBoundary} = require('../src/playback.js');
+const p = (step,frame=0,auto=true,frameCount=8) => resolveBoundary({step,frame,auto,steps:84,frameCount});
+test('never advances at 14 or 83 notes',()=>{assert.deepEqual(p(14),{step:14,frame:0,changed:false});assert.deepEqual(p(83),{step:83,frame:0,changed:false});});
+test('advances only after all 84 notes',()=>assert.deepEqual(p(84),{step:0,frame:1,changed:true}));
+test('last frame wraps to first after full phrase',()=>assert.deepEqual(p(84,7),{step:0,frame:0,changed:true}));
+test('manual selection disables auto advance',()=>assert.deepEqual(p(84,2,false),{step:0,frame:2,changed:false}));
+test('single-image source never advances frames',()=>assert.deepEqual(p(84,0,true,1),{step:0,frame:0,changed:false}));
+test('rejects invalid positions',()=>assert.throws(()=>p(-1),/Invalid playback position/));
