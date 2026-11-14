@@ -28,7 +28,8 @@ jobs:
         run: |
           node --check src/observatory.js
           node --check src/sonification.js
-          node --test tests/core.test.js tests/sonification.test.js
+          node --check src/playback.js
+          node --test tests/*.test.js
       - name: Generate 12 official NASA night lights images
         run: bash scripts/prepare_nasa.sh
       - name: Generate six original NASA visualizations
