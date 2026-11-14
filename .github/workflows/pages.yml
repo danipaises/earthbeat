@@ -41,6 +41,23 @@ jobs:
           for id in ocean carbon forest; do for n in {1..8}; do test -s "$(printf 'assets/observatory/%s/%02d.webp' "$id" "$n")"; done; done
           for id in aerosols lightning; do test -s "assets/observatory/$id/01.webp"; done
           echo "All 38 frames are from original NASA media."
+      - name: Browser smoke test with original NASA imagery
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/earthbeat-browser-check
+          npm install --prefix /tmp/earthbeat-browser-check --no-save --no-package-lock --ignore-scripts --no-audit --no-fund playwright-core@1.56.1
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/earthbeat-server.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          sleep 2
+          NODE_PATH=/tmp/earthbeat-browser-check/node_modules node tests/browser-smoke.cjs
+      - name: Upload browser test screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: earthbeat-browser-smoke
+          path: /tmp/earthbeat-browser-screens/
+          if-no-files-found: ignore
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
