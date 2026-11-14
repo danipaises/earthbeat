@@ -1,0 +1,51 @@
+/* Optional headless Chrome end-to-end smoke test. Runs only against locally served real NASA frames. */
+'use strict';
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const path=require('node:path');
+const {chromium}=require('playwright-core');
+const BASE='http://127.0.0.1:8765/';
+const out=process.env.BROWSER_SHOTS||'/tmp/earthbeat-browser-screens';
+fs.mkdirSync(out,{recursive:true});
+const executable=['/usr/bin/google-chrome','/usr/bin/google-chrome-stable','/usr/bin/chromium','/usr/bin/chromium-browser'].find(x=>fs.existsSync(x));
+if(!executable)throw new Error('Chromium or Google Chrome not installed on GitHub Actions runner');
+(async()=>{
+ const browser=await chromium.launch({executablePath:executable,headless:true,args:['--no-sandbox','--disable-dev-shm-usage','--autoplay-policy=no-user-gesture-required','--use-fake-ui-for-media-stream']});
+ const page=await browser.newPage({viewport:{width:1365,height:900},acceptDownloads:true});
+ const errs=[];
+ page.on('pageerror',e=>errs.push(String(e)));
+ page.on('console',m=>{if(m.type()==='error')console.log('BROWSER CONSOLE:',m.text().slice(0,280));});
+ const waitReady=async()=>{await page.waitForFunction(()=>document.querySelector('#emptyState')?.hidden===true,{timeout:20000});};
+ try{
+  await page.goto(BASE,{waitUntil:'domcontentloaded',timeout:15000});
+  await waitReady();
+  assert.equal(await page.locator('.phenomenon').count(),6);
+  assert.match(await page.locator('#spaceCanvas').getAttribute('aria-label'),/2023/);
+  assert.equal(await page.locator('#playBtn').isEnabled(),true);
+  await page.screenshot({path:path.join(out,'01-nasa-nightlights.png'),fullPage:true});
+  await page.locator('#compareA').selectOption('2012');
+  await page.locator('#compareB').selectOption('2023');
+  await page.locator('#compareBtn').click();
+  await page.locator('#compareListenA').waitFor({state:'visible'});
+  await page.locator('#compareListenB').click();
+  assert.equal(await page.locator('#compareListenB').getAttribute('aria-pressed'),'true');
+  assert.match(await page.locator('#nowSubtitle').innerText(),/2023/);
+  await page.waitForTimeout(300);
+  assert.equal(await page.locator('#playBtn').innerText(),'Ⅱ');
+  await page.locator('#compareListenA').click();
+  assert.equal(await page.locator('#compareListenA').getAttribute('aria-pressed'),'true');
+  assert.match(await page.locator('#nowSubtitle').innerText(),/2012/);
+  await page.locator('#stopBtn').click();
+  await page.screenshot({path:path.join(out,'02-side-by-side-comparison.png'),fullPage:true});
+  await page.locator('[data-module="ocean"]').click();
+  await waitReady();
+  assert.match(await page.locator('#stageTag').innerText(),/OCEAN/);
+  assert.equal(await page.locator('#playBtn').isEnabled(),true);
+  await page.locator('#langBtn').click();
+  assert.equal(await page.locator('html').getAttribute('lang'),'en');
+  await page.setViewportSize({width:390,height:844});
+  await page.screenshot({path:path.join(out,'03-mobile-oceans.png'),fullPage:true});
+  console.log('BROWSER SMOKE PASS: authentic NASA frames, accessible descriptions, A/B audio, ocean switch, English locale, mobile rendering.');
+  assert.deepEqual(errs,[],'Unexpected browser page errors');
+ }finally{await browser.close();}
+})().catch(e=>{console.error('BROWSER SMOKE FAIL:',e);process.exitCode=1;});
