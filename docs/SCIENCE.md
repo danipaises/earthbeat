@@ -35,6 +35,21 @@ The `mean` and `active pixels` cards are **indices of processed images**, not sc
 
 Natively labeled controls, keyboard playback (Space), selection (Left/Right arrows), stable source link, reading descriptions, reduced-motion support, standard HTML ranges and focus indicators. Sounds are not the sole access route: numeric visual summaries and text descriptions accompany them. The moving 3D globe is optional and only used for equirectangular or flat projected images (night lights, ocean currents and aerosols). NASA's pre-rendered globe videos are displayed as videos' extracted frames rather than mapped onto a second globe.
 
+
+## Complete playback and sonic A/B comparison
+
+A phrase reads **84 scan columns × 6 vertical bands** from one NASA visualization frame. When automatic frame advancement is enabled, the application finishes all 84 scan columns before loading and playing the next NASA frame. Single-image modules never advance automatically. Changing a region recomputes the note sequence using that region; the application does not invent missing sound data.
+
+For Black Marble annual imagery, the **Listen A / Listen B** comparison selects two independently analyzed real NASA yearly frames. Both year sequences use exactly the **same image sampler, pitch scale, threshold, timbre, gain and tempo**, allowing a direct *visual-sonification* comparison. The visual mean difference remains a descriptive processed-image index; it is not calibrated light radiance, causal evidence of city growth, electricity usage or economic development.
+
+The browser now provides readable text descriptions of the current visualization's year, brightness index, active-pixel fraction and note count as text alternatives on its canvases. These labels improve access but are not a substitute for formal testing with screen-reader users.
+
+## Additional source and license attribution
+
+- [MIT license for original project software](../LICENSE)
+- [Third-party credits and licensing](THIRD_PARTY_NOTICES.md)
+- [Data and NASA source registry](SOURCES.md)
+
 ## Source credit
 
 **NASA Scientific Visualization Studio**; creators and dataset providers vary by resource. See the linked SVS resource pages for original credits. The website, sound engine, and user interface are EarthBeat team's independent presentation. NASA does not endorse this app.
