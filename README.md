@@ -18,6 +18,14 @@ EarthBeat Observatory turns frames from **six NASA Scientific Visualization Stud
 
 **Important:** video sample frames may contain **camera motion**; they must not be used to claim quantitative trends. No physical concentrations, radiation values or precise strike counts are computed from screen colors. See [Scientific Method](docs/SCIENCE.md).
 
+## New mission experience for public demonstrations
+
+- **Six-chapter NASA guided tour**: a one-click scientific journey across all six EIC visualization sources. Each chapter explains what is being heard and what conclusions must **not** be inferred from the visualization.
+- **Live sound-band telemetry**: six data-derived intensity bars display which of the image's vertical bands are creating notes in the current scanner step. No additional audio is invented.
+- **Twelve-year NASA Night Lights analysis**: an interactive graph and accessible table calculated **on demand from all twelve original NASA frames**, 2012–2023, with a zero-baseline y-axis. The displayed numbers are brightness indices of rendered image pixels, not physically calibrated luminosity, electricity use or city development.
+- **CSV export** of those descriptive NASA rendered-image metrics. Values are calculated using the same consistent image processing for every year.
+- **Bilingual story mode** with keyboard-accessible mission controls. Actual device/screen-reader testing is still recommended.
+
 ## Features
 
 Immersive mission control, selective 3D globe (only flat/equirectangular imagery), 2D image viewer, six data-to-audio instruments, mix two independent data sources, 84-step sonification, audio style / speed / volume / region, NASA original frame navigation, responsive layout, 2012-vs-2023 side-by-side comparison, offline WAV export, source registry, transparent science explanations, keyboard controls and a classic version at [classic.html](classic.html).
