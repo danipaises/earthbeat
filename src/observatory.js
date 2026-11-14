@@ -33,7 +33,7 @@ function updateCatalog(){for(const btn of document.querySelectorAll('[data-modul
 function populateTime(){const m=MODULES[state.id];$('timeType').textContent=m.year?(state.lang==='pt'?'12 ANOS':'12 YEARS'):m.frames===1?(state.lang==='pt'?'1 QUADRO':'1 FRAME'):`${m.frames} ${state.lang==='pt'?'QUADROS':'FRAMES'}`;
  $('seriesTitle').textContent=m.year?(state.lang==='pt'?'Luzes noturnas · 2012—2023':'Night lights · 2012—2023'):`${nameOf(state.id)} · NASA SVS`;
  $('timeExplanation').textContent=m.year?(state.lang==='pt'?'Cada imagem representa um ano, com o mesmo processamento.':'Each image represents one year with consistent processing.'):m.frames===1?(state.lang==='pt'?'Um quadro científico publicado pela NASA.':'One scientific frame published by NASA.'):(state.lang==='pt'?'Amostras visuais ordenadas da animação NASA (incluem movimentos de câmera).':'Sequential samples of NASA animation frames (may include camera movement).');
- $('timeButtons').innerHTML=Array.from({length:m.frames},(_,i)=>`<button type="button" aria-pressed="${state.frame===i}" data-frame="${i}">${m.year?2012+i:String(i+1).padStart(2,'0')}</button>`).join('');
+ $('timeButtons').innerHTML=Array.from({length:m.frames},(_,i)=>`<button type="button" aria-pressed="${state.frame===i}" data-frame="${i}" aria-label="${m.year?(state.lang==='pt'?'Luzes noturnas, ano ':'Night lights, year ')+(2012+i):(state.lang==='pt'?'Quadro ':'Frame ')+(i+1)+' — '+nameOf(state.id)}">${m.year?2012+i:String(i+1).padStart(2,'0')}</button>`).join('');
  for(const btn of $('timeButtons').querySelectorAll('button'))btn.addEventListener('click',()=>setFrame(Number(btn.dataset.frame)));
 }
 function timeButtonState(){for(const btn of $('timeButtons').querySelectorAll('button'))btn.setAttribute('aria-pressed',String(Number(btn.dataset.frame)===state.frame));}
@@ -73,7 +73,12 @@ async function loadFrame(id,frame,{keepPlay=false}={}){
   noteToSR('NASA data could not be loaded. No synthetic image will be substituted.');
  }finally{if(token===state.load)state.frameLoading=false;}
 }
-function updateFrameMeta(){$('nowTitle').textContent=nameOf(state.id);$('nowSubtitle').textContent=`${frameName(state.id,state.frame)} · ${MODULES[state.id].subtitle}`;$('moduleGlyph').textContent=MODULES[state.id].icon;}
+function updateFrameMeta(){
+ $('nowTitle').textContent=nameOf(state.id);
+ const selected=state.compare&&state.compareData?(state.compareAudioSource==='B'?state.compareData.frame:state.compareData.aFrame):state.frame;
+ $('nowSubtitle').textContent=`${frameName(state.id,selected)} · ${MODULES[state.id].subtitle}`;
+ $('moduleGlyph').textContent=MODULES[state.id].icon;
+}
 function selectModule(id){if(!MODULES[id])return;stopPlayback();state.id=id;state.frame=id==='lights'?11:0;state.compare=false;state.compareData=null;state.compareAudioSource='A';$('compareListenControls').hidden=true;state.view=MODULES[id].globe?'globe':'map';state.step=0;state.image=null;state.grid=null;state.sequence=[];state.metrics=null;
  document.documentElement.style.setProperty('--accent',MODULES[id].color);document.documentElement.style.setProperty('--glow',MODULES[id].color+'33');
  if(!state.globe)state.view='map';$('screen').classList.toggle('globe',state.view==='globe');$('screen').classList.remove('fullscreen');document.body.classList.remove('screen-expanded');$('viewBtn').textContent=state.view==='globe'?'◉ GLOBO':'▣ MAPA';$('viewBtn').disabled=!MODULES[id].globe;
@@ -101,7 +106,7 @@ function updateScreen(){
 function globeToggle(){if(!MODULES[state.id].globe)return;state.view=state.view==='globe'?'map':'globe';$('screen').classList.toggle('globe',state.view==='globe');$('viewBtn').textContent=state.view==='globe'?'◉ GLOBO':'▣ MAPA';if(state.view==='globe'&&state.image)state.globe?.setTexture(state.image);}
 function fullToggle(){const expanded=$('screen').classList.toggle('fullscreen');document.body.classList.toggle('screen-expanded',expanded);$('fullBtn').textContent=expanded?'⤡':'⤢';}
 const interval=()=>230/state.speed;
-function updatePlayLabel(){$('playBtn').textContent=state.playing?'Ⅱ':'▶';$('playBtn').setAttribute('aria-label',state.playing?'Pausar':'Reproduzir');$('playBtn').disabled=!state.grid;$('stopBtn').disabled=!state.grid;$('exportBtn').disabled=!state.grid;$('vinyl').classList.toggle('spinning',state.playing);
+function updatePlayLabel(){$('playBtn').textContent=state.playing?'Ⅱ':'▶';$('playBtn').setAttribute('aria-label',state.playing?(state.lang==='pt'?'Pausar':'Pause'):(state.lang==='pt'?'Reproduzir':'Play'));$('playBtn').disabled=!state.grid;$('stopBtn').disabled=!state.grid;$('exportBtn').disabled=!state.grid;$('vinyl').classList.toggle('spinning',state.playing);
  const dur=S.STEPS*interval()/1000;
  $('elapsed').textContent=time(state.step*interval()/1000);$('duration').textContent=time(dur);
  $('progressFill').style.width=clamp(state.step/S.STEPS)*100+'%';
@@ -161,7 +166,7 @@ async function exportWAV(){if(!state.grid)return;const C=window.OfflineAudioCont
  const buf=await offline.startRendering();const obj=URL.createObjectURL(wavBlob(buf));const a=document.createElement('a');a.href=obj;a.download=`EarthBeat_${state.id}_${frameName(state.id,state.frame)}.wav`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(obj),3000);
  }catch(err){console.error(err);alert('Export failed: '+err.message);}finally{btn.disabled=false;btn.textContent=state.lang==='pt'?'↓   Exportar composição WAV':'↓   Export WAV composition';}
 }
-async function compare(){const a=Number($('compareA').value)-2012,b=Number($('compareB').value)-2012;if(a===b){$('compareReadout').textContent='Selecione anos diferentes.';return;}
+async function compare(){const a=Number($('compareA').value)-2012,b=Number($('compareB').value)-2012;if(a===b){$('compareReadout').textContent=state.lang==='pt'?'Selecione anos diferentes.':'Choose different years.';return;}
  stopPlayback();state.id='lights';state.frame=a;state.view='map';$('screen').classList.remove('globe');$('viewBtn').textContent='▣ MAPA';
  try{const [ia,ib]=await Promise.all([getImage('lights',a),getImage('lights',b)]);const ga=makeData(ia,'lights'),gb=makeData(ib,'lights'),ma=S.metrics(ga,state.region),mb=S.metrics(gb,state.region);
   state.image=ia;state.grid=ga;state.metrics=ma;state.sequence=S.notes(ga,state.region);state.compare=true;
@@ -293,7 +298,11 @@ function applyInterfaceLanguage(){
 function setup(){
  state.globe=setupGlobe();if(!state.globe)state.view='map';
  buildCatalog();$('compareA').innerHTML=S.modeConfig.lights&&Array.from({length:12},(_,i)=>`<option value="${2012+i}">${2012+i}</option>`).join('');$('compareB').innerHTML=$('compareA').innerHTML;$('compareA').value='2012';$('compareB').value='2023';
- $('langBtn').addEventListener('click',()=>{state.lang=state.lang==='pt'?'en':'pt';applyInterfaceLanguage();buildCatalog();updateCatalog();populateTime();updateFrameMeta();updateStats();noteToSR(state.lang==='pt'?'Português':'English');});
+ $('langBtn').addEventListener('click',()=>{state.lang=state.lang==='pt'?'en':'pt';applyInterfaceLanguage();buildCatalog();updateCatalog();populateTime();updateFrameMeta();updateStats();if(state.compare&&state.compareData){
+   $('compareListenA').textContent=state.lang==='pt'?`▶ Ouvir A (${2012+state.compareData.aFrame})`:`▶ Listen A (${2012+state.compareData.aFrame})`;
+   $('compareListenB').textContent=state.lang==='pt'?`▶ Ouvir B (${2012+state.compareData.frame})`:`▶ Listen B (${2012+state.compareData.frame})`;
+  }
+  noteToSR(state.lang==='pt'?'Português':'English');});
  $('playBtn').addEventListener('click',togglePlay);$('stopBtn').addEventListener('click',stopPlayback);$('backBtn').addEventListener('click',()=>{stopPlayback();updatePlayLabel();});
  $('viewBtn').addEventListener('click',globeToggle);$('fullBtn').addEventListener('click',fullToggle);
  $('volume').addEventListener('input',e=>{state.volume=Number(e.target.value)/100;$('volumeValue').textContent=e.target.value+'%';if(state.audio&&state.master)state.master.gain.setTargetAtTime(state.volume,state.audio.currentTime,.015);});
