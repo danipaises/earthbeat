@@ -29,3 +29,49 @@
 .compare-listen button:focus-visible{outline:3px solid #ffed8a;outline-offset:2px}
 .time-buttons button{min-height:38px}
 @media(prefers-reduced-motion:reduce){.scan-beam{transition:none!important}}
+
+/* Space Apps: immersive guided tour and live scientific telemetry */
+.button-mission{color:#c6f8f5;background:linear-gradient(115deg,#102f43,#19334c);border:1px solid #4f929a;border-radius:9px;padding:13px 17px;font-weight:800;font-size:12px;display:inline-flex;align-items:center;gap:15px;box-shadow:0 0 20px #57d6dc19;cursor:pointer}
+.button-mission:hover,.mission-secondary:hover,.insights-button:hover{background:#1e4555;border-color:#72dfd8}
+.mission-panel{border:1px solid #507b96;border-radius:15px;background:linear-gradient(130deg,#143851,#101f3b 58%,#0d2939);box-shadow:0 18px 80px #12d0c81a;position:relative;overflow:hidden;padding:20px 26px;margin:0 0 18px}
+.mission-panel:before{content:"";width:350px;height:350px;position:absolute;right:-115px;top:-120px;pointer-events:none;background:radial-gradient(circle,#39e9da32,transparent 72%)}
+.mission-heading{display:flex;align-items:center;gap:16px;color:#79f4df;font:700 11px var(--display);letter-spacing:1.3px}
+.mission-count{margin-left:auto;color:#cae4fc}.mission-close{width:31px;height:31px;border-radius:7px;border:1px solid #4f7586;background:#172d44;color:#c4e0ed}
+.mission-content{display:grid;grid-template-columns:1.12fr .88fr;gap:30px;align-items:start;margin:13px 0 19px}
+.mission-content h3{font:700 clamp(23px,2.3vw,34px) var(--display);letter-spacing:-1px;margin:5px 0 8px}
+.mission-content p{font-size:12px;color:#a8c5d7;line-height:1.75;margin:0}
+.mission-detail{padding:15px;border:1px solid #41677d;background:#0d2639bb;border-radius:10px}
+.mission-detail strong{font:700 14px var(--display);color:#82f6e5}
+.mission-footer{border-top:1px solid #385c72;padding-top:15px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.mission-progress{display:flex;gap:6px;flex:1}.mission-progress i{width:23px;max-width:17%;height:5px;display:block;border-radius:4px;background:#34576d}.mission-progress i.done{background:#5cebd6}
+.mission-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.mission-actions button{min-height:40px;padding:9px 13px;font-weight:800;font-size:11px;border-radius:8px;cursor:pointer}
+.mission-secondary{border:1px solid #4b7087;background:#122b40;color:#def2f8}
+.mission-primary{background:linear-gradient(135deg,#66f1da,#69b6fa);border:1px solid #74f4e5;color:#062632}
+.telemetry-panel{display:flex;align-items:center;gap:25px;justify-content:space-between;border:1px solid #284957;border-radius:12px;background:linear-gradient(130deg,#0f2937,#102239);padding:18px 23px;margin-top:15px}
+.telemetry-copy{max-width:500px}.telemetry-copy h3{font:700 19px var(--display);margin:7px 0}.telemetry-copy h3 span{color:#7be4e1}
+.telemetry-copy p{font-size:11px;line-height:1.7;color:#96b8c9;margin:0}
+.telemetry-bands{width:38%;min-width:250px}
+.telemetry-slots{display:flex;align-items:end;justify-content:space-between;gap:8px;height:55px}
+.telemetry-slots i{background:linear-gradient(0deg,#4189e9,#5eead7);width:100%;border-radius:5px 5px 2px 2px;min-height:4px;height:4px;transition:height .16s ease;opacity:.65}
+.telemetry-bands>span{display:block;color:#80c9cd;font:600 10px var(--display);margin-top:10px;text-align:right}
+.insights-panel{border:1px solid #335d73;border-radius:13px;background:linear-gradient(125deg,#11293b,#0d1c30);padding:24px 26px;margin-top:17px}
+.insights-panel[hidden]{display:none!important}.insights-top{display:flex;justify-content:space-between;gap:20px;align-items:center}
+.insights-top h3{font:700 25px var(--display);letter-spacing:-1px;margin:8px 0}
+.insights-top h3 em{color:#71eddf;font-style:normal}
+.insights-top p{font-size:12px;color:#9eb9ca;line-height:1.65;max-width:720px;margin:0}
+.insights-button{background:#144153;border:1px solid #4c8896;color:#c4f8ee;border-radius:9px;padding:13px 16px;font-size:11px;font-weight:800;white-space:nowrap}
+.year-results{border-top:1px solid #305367;margin-top:20px;padding-top:17px}
+.year-results[hidden]{display:none!important}.year-results canvas{width:100%;height:auto;display:block;max-height:340px;border:1px solid #2a4d5f;background:#0a1b2c;border-radius:10px}
+#yearChartStatus{color:#8cbfd0;font-size:11px;margin:0 0 13px}
+.insights-actions{display:flex;justify-content:flex-end;gap:9px;flex-wrap:wrap;margin:13px 0}
+.insights-actions button{padding:9px 13px;color:#9fe6df;border:1px solid #355f75;border-radius:7px;font-size:11px;font-weight:800;background:#142c42}
+.insights-actions button:hover{border-color:#6fe7d8}
+#yearTableWrap{max-height:365px;overflow:auto;border:1px solid #2b5062;border-radius:8px;margin-top:10px}
+#yearTable{width:100%;border-collapse:collapse;min-width:450px;font-size:12px}
+#yearTable th,#yearTable td{text-align:left;padding:9px 14px;border-bottom:1px solid #2b4353}#yearTable th{color:#84e5dd;background:#132d40;position:sticky;top:0}
+#yearTable tbody tr:nth-child(even){background:#14304355}
+#yearTable caption{text-align:left;padding:11px;color:#93adbd;font-size:10px}
+.insights-note{color:#89aabb;font-size:10px;line-height:1.65;max-width:950px}
+@media(max-width:750px){.mission-content{grid-template-columns:1fr;gap:15px}.mission-footer{flex-direction:column;align-items:stretch}.mission-actions{justify-content:space-between}.mission-panel{padding:18px}.telemetry-panel{flex-direction:column;align-items:stretch}.telemetry-bands{min-width:0;width:100%}.insights-top{flex-direction:column;align-items:flex-start}.insights-button{width:100%}.mission-panel .mission-kicker{font-size:9px}}
+@media(max-width:440px){.mission-actions{display:grid;grid-template-columns:1fr 1fr}.mission-actions #missionSound{grid-column:1/-1;grid-row:1}.insights-panel{padding:17px 14px}.telemetry-panel{padding:15px}.mission-content h3{font-size:23px}}
