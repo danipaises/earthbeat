@@ -166,6 +166,7 @@
     try{
       annual=await app.getAnnualMetrics();
       if(annual.length!==12||annual.some(row=>!Number.isFinite(row.mean)||!Number.isFinite(row.density)))throw Error('Invalid scientific frame metrics');
+      $('yearChart').hidden=false;
       renderChart(annual);renderTable(annual);
       elText('yearChartStatus',copy('12 imagens NASA processadas. Selecione um ano no gráfico ou na tabela.','12 NASA images processed. Select a year in the chart or table.'));
       $('yearExport').disabled=false;
